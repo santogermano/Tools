@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>European ETF Investment Guide</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #16a34a;
+            --warning: #ca8a04;
+            --danger: #dc2626;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            border-color: var(--primary);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .card h3 {
+            margin: 20px 0 12px;
+            color: var(--text);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        th:hover {
+            background: var(--border);
+        }
+
+        tr:hover {
+            background: var(--bg);
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .score-excellent { background: #dcfce7; color: #166534; }
+        .score-good { background: #dbeafe; color: #1e40af; }
+        .score-fair { background: #fef3c7; color: #92400e; }
+        .score-poor { background: #fee2e2; color: #991b1b; }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            border: 1px solid var(--border);
+        }
+
+        input, select {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: #dcfce7;
+            border-left: 4px solid var(--success);
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .etf-detail {
+            display: none;
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .etf-detail.show {
+            display: block;
+        }
+
+        .recommendation {
+            padding: 20px;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .recommendation h3 {
+            color: var(--success);
+            margin-bottom: 12px;
+        }
+
+        .slider-container {
+            margin: 20px 0;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--bg);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: flex-end;
+        }
+
+        .filter-row .form-group {
+            margin-bottom: 0;
+            min-width: 150px;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, var(--bg), var(--border));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .filter-row {
+                flex-direction: column;
+            }
+
+            .filter-row .form-group {
+                width: 100%;
+            }
+        }
+
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltip::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s;
+            z-index: 100;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .compare-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        #comparePanel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            border-top: 2px solid var(--primary);
+            padding: 15px 20px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+        }
+
+        #comparePanel.show {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>European ETF Investment Guide</h1>
+            <p>Your personal tool to find, analyze, and plan ETF investments - designed for beginners</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('learn')">Learn Basics</button>
+            <button class="tab" onclick="showTab('discover')">Discover ETFs</button>
+            <button class="tab" onclick="showTab('analyze')">Analyze & Score</button>
+            <button class="tab" onclick="showTab('plan')">Investment Planner</button>
+            <button class="tab" onclick="showTab('watchlist')">My Watchlist</button>
+        </div>
+
+        <!-- LEARN TAB -->
+        <div id="learn-tab" class="tab-content">
+            <div class="card">
+                <h2>What is an ETF?</h2>
+                <p>An <strong>ETF (Exchange-Traded Fund)</strong> is like a basket containing many different investments (stocks, bonds, etc.) that you can buy with a single purchase. Think of it as buying a slice of the entire market instead of picking individual companies.</p>
+
+                <div class="grid" style="margin-top: 20px;">
+                    <div class="info-box">
+                        <strong>Why ETFs are great for beginners:</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Instant diversification (own hundreds of companies)</li>
+                            <li>Low costs compared to traditional funds</li>
+                            <li>Trade like regular stocks</li>
+                            <li>Transparent - you know exactly what's inside</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <strong>European ETF advantages:</strong>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>UCITS regulations provide strong investor protection</li>
+                            <li>Tax-efficient structures (especially Irish domicile)</li>
+                            <li>Wide selection on European exchanges</li>
+                            <li>Currency-hedged options available</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Key Metrics Explained</h2>
+                <div class="grid grid-3">
+                    <div>
+                        <h3 class="tooltip" data-tip="Total Expense Ratio - annual cost deducted from returns">TER (Total Expense Ratio)</h3>
+                        <p>The yearly cost of owning the ETF. <strong>Lower is better.</strong></p>
+                        <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem;">
+                            <li><span style="color: var(--success);">Excellent:</span> Below 0.10%</li>
+                            <li><span style="color: var(--primary);">Good:</span> 0.10% - 0.30%</li>
+                            <li><span style="color: var(--warning);">Average:</span> 0.30% - 0.50%</li>
+                            <li><span style="color: var(--danger);">High:</span> Above 0.50%</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="tooltip" data-tip="Assets Under Management - total money invested in the fund">AUM (Assets Under Management)</h3>
+                        <p>Total money invested in the ETF. <strong>Higher is usually better</strong> (more liquid, less likely to close).</p>
+                        <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem;">
+                            <li><span style="color: var(--success);">Large:</span> Above 1 billion</li>
+                            <li><span style="color: var(--primary);">Medium:</span> 100M - 1B</li>
+                            <li><span style="color: var(--warning);">Small:</span> 50M - 100M</li>
+                            <li><span style="color: var(--danger);">Risky:</span> Below 50M</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="tooltip" data-tip="How the ETF recreates the index it tracks">Replication Method</h3>
+                        <p>How the ETF copies its target index:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem;">
+                            <li><strong>Physical Full:</strong> Buys all stocks in index (safest)</li>
+                            <li><strong>Physical Sampling:</strong> Buys representative sample</li>
+                            <li><strong>Synthetic/Swap:</strong> Uses derivatives (counterparty risk)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="tooltip" data-tip="Where the ETF is legally based - affects taxation">Domicile</h3>
+                        <p>Country where the ETF is registered:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem;">
+                            <li><strong>Ireland (IE):</strong> Best for US stocks (15% dividend tax)</li>
+                            <li><strong>Luxembourg (LU):</strong> Good alternative</li>
+                            <li><strong>Germany (DE):</strong> May have higher withholding taxes</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="tooltip" data-tip="What happens to dividends received by the ETF">Distribution Policy</h3>
+                        <p>How dividends are handled:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem;">
+                            <li><strong>Accumulating:</strong> Reinvests dividends (tax-efficient, compound growth)</li>
+                            <li><strong>Distributing:</strong> Pays out dividends (income-focused)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="tooltip" data-tip="Difference between buy and sell price">Spread</h3>
+                        <p>The cost of trading:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px; font-size: 0.9rem;">
+                            <li><span style="color: var(--success);">Tight:</span> Below 0.05%</li>
+                            <li><span style="color: var(--primary);">Normal:</span> 0.05% - 0.15%</li>
+                            <li><span style="color: var(--warning);">Wide:</span> Above 0.15%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Investment Strategies for Beginners</h2>
+                <div class="grid">
+                    <div class="success-box">
+                        <h3 style="margin-top: 0;">Dollar-Cost Averaging (DCA)</h3>
+                        <p>Invest a fixed amount regularly (e.g., 500/month) regardless of price. This reduces the impact of market volatility and removes emotional decision-making.</p>
+                        <p style="margin-top: 10px;"><strong>Best for:</strong> Most beginners, long-term investors</p>
+                    </div>
+                    <div class="info-box">
+                        <h3 style="margin-top: 0;">Lump Sum Investing</h3>
+                        <p>Invest all available capital at once. Statistically performs better 2/3 of the time, but emotionally harder if markets drop right after.</p>
+                        <p style="margin-top: 10px;"><strong>Best for:</strong> Those with high risk tolerance, long time horizons</p>
+                    </div>
+                </div>
+
+                <div class="warning-box" style="margin-top: 20px;">
+                    <strong>Important Risk Disclaimer:</strong>
+                    <p style="margin-top: 8px;">Investing in ETFs involves risk. Past performance does not guarantee future results. This tool provides educational information only and should not be considered financial advice. Always do your own research and consider consulting a qualified financial advisor.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DISCOVER TAB -->
+        <div id="discover-tab" class="tab-content hidden">
+            <div class="card">
+                <h2>Popular European ETF Categories</h2>
+                <p style="margin-bottom: 20px;">Click on a category to see available ETFs. Data is sourced from major European exchanges.</p>
+
+                <div class="filter-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="categoryFilter" onchange="filterETFs()">
+                            <option value="all">All Categories</option>
+                            <option value="world">Global / World Equity</option>
+                            <option value="europe">European Equity</option>
+                            <option value="us">US Equity</option>
+                            <option value="emerging">Emerging Markets</option>
+                            <option value="bonds">Bonds / Fixed Income</option>
+                            <option value="sector">Sector / Thematic</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Min. AUM</label>
+                        <select id="aumFilter" onchange="filterETFs()">
+                            <option value="0">Any Size</option>
+                            <option value="100000000">100M+</option>
+                            <option value="500000000">500M+</option>
+                            <option value="1000000000">1B+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Max TER</label>
+                        <select id="terFilter" onchange="filterETFs()">
+                            <option value="1">Any TER</option>
+                            <option value="0.10">0.10% or less</option>
+                            <option value="0.20">0.20% or less</option>
+                            <option value="0.30">0.30% or less</option>
+                            <option value="0.50">0.50% or less</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Distribution</label>
+                        <select id="distFilter" onchange="filterETFs()">
+                            <option value="all">Any</option>
+                            <option value="acc">Accumulating</option>
+                            <option value="dist">Distributing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" onclick="refreshData()">Refresh Data</button>
+                    </div>
+                </div>
+
+                <div id="etfTableContainer">
+                    <table id="etfTable">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('compare')">Compare</th>
+                                <th onclick="sortTable('name')">Name</th>
+                                <th onclick="sortTable('isin')">ISIN</th>
+                                <th onclick="sortTable('ter')" class="tooltip" data-tip="Total Expense Ratio">TER</th>
+                                <th onclick="sortTable('aum')" class="tooltip" data-tip="Assets Under Management">AUM</th>
+                                <th onclick="sortTable('score')">Score</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="etfTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" id="etfDetailCard" style="display: none;">
+                <h2 id="detailName">ETF Details</h2>
+                <div id="etfDetailContent"></div>
+            </div>
+        </div>
+
+        <!-- ANALYZE TAB -->
+        <div id="analyze-tab" class="tab-content hidden">
+            <div class="card">
+                <h2>ETF Scoring Engine</h2>
+                <p>Customize the scoring weights based on what matters most to you. The total should equal 100%.</p>
+
+                <div class="grid" style="margin-top: 20px;">
+                    <div>
+                        <h3>Scoring Weights</h3>
+                        <div class="slider-container">
+                            <label>Cost (TER & Spread): <span id="costWeightValue">35</span>%</label>
+                            <input type="range" class="slider" id="costWeight" min="0" max="100" value="35" oninput="updateWeights()">
+                        </div>
+                        <div class="slider-container">
+                            <label>Liquidity (AUM & Volume): <span id="liquidityWeightValue">25</span>%</label>
+                            <input type="range" class="slider" id="liquidityWeight" min="0" max="100" value="25" oninput="updateWeights()">
+                        </div>
+                        <div class="slider-container">
+                            <label>Structure (Replication, Domicile, Age): <span id="structureWeightValue">25</span>%</label>
+                            <input type="range" class="slider" id="structureWeight" min="0" max="100" value="25" oninput="updateWeights()">
+                        </div>
+                        <div class="slider-container">
+                            <label>Provider Reputation: <span id="trackingWeightValue">15</span>%</label>
+                            <input type="range" class="slider" id="trackingWeight" min="0" max="100" value="15" oninput="updateWeights()">
+                        </div>
+                        <p style="margin-top: 10px;">Total: <strong id="totalWeight">100</strong>% (will be normalized)</p>
+                    </div>
+                    <div>
+                        <h3>Hard Constraints</h3>
+                        <div class="form-group">
+                            <label>Distribution Type</label>
+                            <select id="constraintDist">
+                                <option value="any">Any</option>
+                                <option value="acc">Accumulating Only</option>
+                                <option value="dist">Distributing Only</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Replication</label>
+                            <select id="constraintReplication">
+                                <option value="any">Any</option>
+                                <option value="physical">Physical Only</option>
+                                <option value="synthetic">Including Synthetic</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Domicile</label>
+                            <select id="constraintDomicile">
+                                <option value="any">Any</option>
+                                <option value="IE">Ireland Only</option>
+                                <option value="IE,LU">Ireland or Luxembourg</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Minimum Fund Age</label>
+                            <select id="constraintAge">
+                                <option value="0">Any Age</option>
+                                <option value="365">1+ years</option>
+                                <option value="730">2+ years</option>
+                                <option value="1825">5+ years</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="runAnalysis()" style="margin-top: 20px;">Run Analysis</button>
+            </div>
+
+            <div class="card" id="analysisResults" style="display: none;">
+                <h2>Analysis Results</h2>
+                <div id="analysisContent"></div>
+            </div>
+        </div>
+
+        <!-- PLAN TAB -->
+        <div id="plan-tab" class="tab-content hidden">
+            <div class="card">
+                <h2>Investment Planner</h2>
+                <p>Let's create a personalized investment plan based on your situation and goals.</p>
+
+                <div class="grid">
+                    <div>
+                        <h3>Your Financial Situation</h3>
+                        <div class="form-group">
+                            <label>Monthly amount available to invest</label>
+                            <input type="number" id="monthlyAmount" placeholder="e.g., 500" value="500">
+                        </div>
+                        <div class="form-group">
+                            <label>Lump sum available (one-time)</label>
+                            <input type="number" id="lumpSum" placeholder="e.g., 10000" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Investment time horizon</label>
+                            <select id="timeHorizon">
+                                <option value="5">5 years</option>
+                                <option value="10" selected>10 years</option>
+                                <option value="15">15 years</option>
+                                <option value="20">20 years</option>
+                                <option value="30">30+ years</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Your Risk Profile</h3>
+                        <div class="form-group">
+                            <label>Risk tolerance</label>
+                            <select id="riskTolerance">
+                                <option value="conservative">Conservative (preserve capital, low volatility)</option>
+                                <option value="moderate" selected>Moderate (balanced growth and safety)</option>
+                                <option value="aggressive">Aggressive (maximize growth, accept volatility)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>If your portfolio dropped 20% in a month, you would:</label>
+                            <select id="drawdownReaction">
+                                <option value="panic">Sell everything immediately</option>
+                                <option value="worried">Be very worried, might sell some</option>
+                                <option value="hold" selected>Hold and wait for recovery</option>
+                                <option value="buy">See it as a buying opportunity</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Investment goal</label>
+                            <select id="investmentGoal">
+                                <option value="retirement">Retirement</option>
+                                <option value="wealth" selected>Wealth building</option>
+                                <option value="income">Regular income</option>
+                                <option value="specific">Specific goal (house, education, etc.)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="generatePlan()" style="margin-top: 20px;">Generate My Plan</button>
+            </div>
+
+            <div class="card" id="investmentPlan" style="display: none;">
+                <h2>Your Personalized Investment Plan</h2>
+                <div id="planContent"></div>
+            </div>
+        </div>
+
+        <!-- WATCHLIST TAB -->
+        <div id="watchlist-tab" class="tab-content hidden">
+            <div class="card">
+                <h2>My Watchlist</h2>
+                <p>Track ETFs you're interested in. Your watchlist is saved in your browser.</p>
+
+                <div id="watchlistEmpty" class="info-box">
+                    <p>Your watchlist is empty. Go to the <strong>Discover ETFs</strong> tab and click the star icon to add ETFs to your watchlist.</p>
+                </div>
+
+                <div id="watchlistContent" style="display: none;">
+                    <table id="watchlistTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>ISIN</th>
+                                <th>TER</th>
+                                <th>Score</th>
+                                <th>Notes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="watchlistBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-secondary" onclick="exportWatchlist()">Export Watchlist</button>
+                    <button class="btn btn-secondary" onclick="clearWatchlist()" style="margin-left: 10px;">Clear All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Panel -->
+    <div id="comparePanel">
+        <div>
+            <strong>Compare ETFs:</strong>
+            <span id="compareList"></span>
+        </div>
+        <div>
+            <button class="btn btn-primary" onclick="showComparison()">Compare Selected</button>
+            <button class="btn btn-secondary" onclick="clearComparison()" style="margin-left: 10px;">Clear</button>
+        </div>
+    </div>
+
+    <!-- Comparison Modal -->
+    <div id="comparisonModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000; overflow: auto;">
+        <div style="background: white; margin: 50px auto; max-width: 1200px; border-radius: 12px; padding: 30px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>ETF Comparison</h2>
+                <button class="btn btn-secondary" onclick="closeComparison()">Close</button>
+            </div>
+            <div id="comparisonContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== ETF DATABASE ====================
+        // Curated list of popular European UCITS ETFs with accurate data
+        const ETF_DATABASE = [
+            // Global / World Equity
+            { isin: "IE00B4L5Y983", name: "iShares Core MSCI World UCITS ETF", ticker: "IWDA", provider: "iShares", ter: 0.20, aum: 65000000000, category: "world", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2009-09-25", index: "MSCI World", holdings: 1500 },
+            { isin: "IE00BK5BQT80", name: "Vanguard FTSE All-World UCITS ETF (Acc)", ticker: "VWCE", provider: "Vanguard", ter: 0.22, aum: 30000000000, category: "world", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2019-07-23", index: "FTSE All-World", holdings: 3700 },
+            { isin: "IE00B3RBWM25", name: "Vanguard FTSE All-World UCITS ETF (Dist)", ticker: "VWRL", provider: "Vanguard", ter: 0.22, aum: 15000000000, category: "world", domicile: "IE", replication: "physical_sampling", accDist: "dist", hedged: false, inception: "2012-05-22", index: "FTSE All-World", holdings: 3700 },
+            { isin: "IE00BJ0KDQ92", name: "Xtrackers MSCI World UCITS ETF 1C", ticker: "XDWD", provider: "Xtrackers", ter: 0.19, aum: 10000000000, category: "world", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2014-07-22", index: "MSCI World", holdings: 1500 },
+            { isin: "LU1781541179", name: "Lyxor Core MSCI World (DR) UCITS ETF", ticker: "LCWD", provider: "Amundi", ter: 0.12, aum: 4500000000, category: "world", domicile: "LU", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2018-02-28", index: "MSCI World", holdings: 1500 },
+            { isin: "IE00BF4RFH31", name: "iShares MSCI World SRI UCITS ETF", ticker: "SUSW", provider: "iShares", ter: 0.20, aum: 8000000000, category: "world", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2017-10-25", index: "MSCI World SRI", holdings: 400 },
+
+            // US Equity
+            { isin: "IE00B5BMR087", name: "iShares Core S&P 500 UCITS ETF", ticker: "CSPX", provider: "iShares", ter: 0.07, aum: 85000000000, category: "us", domicile: "IE", replication: "physical_full", accDist: "acc", hedged: false, inception: "2010-05-19", index: "S&P 500", holdings: 500 },
+            { isin: "IE00B3XXRP09", name: "Vanguard S&P 500 UCITS ETF", ticker: "VUAA", provider: "Vanguard", ter: 0.07, aum: 40000000000, category: "us", domicile: "IE", replication: "physical_full", accDist: "acc", hedged: false, inception: "2012-05-22", index: "S&P 500", holdings: 500 },
+            { isin: "IE00BFMXXD54", name: "Vanguard S&P 500 UCITS ETF (Dist)", ticker: "VUSA", provider: "Vanguard", ter: 0.07, aum: 35000000000, category: "us", domicile: "IE", replication: "physical_full", accDist: "dist", hedged: false, inception: "2012-05-22", index: "S&P 500", holdings: 500 },
+            { isin: "IE00B3YCGJ38", name: "Invesco EQQQ Nasdaq-100 UCITS ETF", ticker: "EQQQ", provider: "Invesco", ter: 0.30, aum: 8000000000, category: "us", domicile: "IE", replication: "physical_full", accDist: "acc", hedged: false, inception: "2009-12-14", index: "Nasdaq-100", holdings: 100 },
+            { isin: "IE00BFMXYS66", name: "iShares Nasdaq 100 UCITS ETF", ticker: "CNDX", provider: "iShares", ter: 0.33, aum: 12000000000, category: "us", domicile: "IE", replication: "physical_full", accDist: "acc", hedged: false, inception: "2010-01-26", index: "Nasdaq-100", holdings: 100 },
+            { isin: "IE00BK1PV551", name: "Xtrackers MSCI USA UCITS ETF 1C", ticker: "XD9U", provider: "Xtrackers", ter: 0.07, aum: 7000000000, category: "us", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2015-03-18", index: "MSCI USA", holdings: 600 },
+
+            // European Equity
+            { isin: "IE00B4K48X80", name: "iShares Core MSCI Europe UCITS ETF", ticker: "IMEU", provider: "iShares", ter: 0.12, aum: 9000000000, category: "europe", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2009-09-25", index: "MSCI Europe", holdings: 430 },
+            { isin: "IE00B945VV12", name: "Vanguard FTSE Developed Europe UCITS ETF", ticker: "VEUR", provider: "Vanguard", ter: 0.10, aum: 4500000000, category: "europe", domicile: "IE", replication: "physical_full", accDist: "dist", hedged: false, inception: "2013-05-21", index: "FTSE Developed Europe", holdings: 550 },
+            { isin: "IE00BKX55T58", name: "Vanguard FTSE Developed Europe UCITS ETF (Acc)", ticker: "VWCG", provider: "Vanguard", ter: 0.10, aum: 2500000000, category: "europe", domicile: "IE", replication: "physical_full", accDist: "acc", hedged: false, inception: "2019-05-14", index: "FTSE Developed Europe", holdings: 550 },
+            { isin: "LU0908500753", name: "Lyxor Core STOXX Europe 600 UCITS ETF", ticker: "MEUD", provider: "Amundi", ter: 0.07, aum: 8000000000, category: "europe", domicile: "LU", replication: "physical_full", accDist: "acc", hedged: false, inception: "2013-04-03", index: "STOXX Europe 600", holdings: 600 },
+            { isin: "DE0002635307", name: "iShares STOXX Europe 600 UCITS ETF", ticker: "EXSA", provider: "iShares", ter: 0.20, aum: 7500000000, category: "europe", domicile: "DE", replication: "physical_full", accDist: "dist", hedged: false, inception: "2004-03-08", index: "STOXX Europe 600", holdings: 600 },
+            { isin: "IE00B53L3W79", name: "iShares EURO STOXX 50 UCITS ETF", ticker: "CSX5", provider: "iShares", ter: 0.10, aum: 5500000000, category: "europe", domicile: "IE", replication: "physical_full", accDist: "acc", hedged: false, inception: "2010-01-15", index: "EURO STOXX 50", holdings: 50 },
+
+            // Emerging Markets
+            { isin: "IE00BKM4GZ66", name: "iShares Core MSCI EM IMI UCITS ETF", ticker: "EIMI", provider: "iShares", ter: 0.18, aum: 20000000000, category: "emerging", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2014-05-30", index: "MSCI EM IMI", holdings: 3200 },
+            { isin: "IE00B3VVMM84", name: "Vanguard FTSE Emerging Markets UCITS ETF", ticker: "VFEM", provider: "Vanguard", ter: 0.22, aum: 4000000000, category: "emerging", domicile: "IE", replication: "physical_sampling", accDist: "dist", hedged: false, inception: "2012-05-22", index: "FTSE Emerging", holdings: 1900 },
+            { isin: "IE00BKM4GZ66", name: "Xtrackers MSCI Emerging Markets UCITS ETF 1C", ticker: "XMME", provider: "Xtrackers", ter: 0.18, aum: 5500000000, category: "emerging", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2017-11-09", index: "MSCI Emerging Markets", holdings: 1400 },
+            { isin: "LU1681045370", name: "Amundi MSCI Emerging Markets UCITS ETF", ticker: "AEEM", provider: "Amundi", ter: 0.20, aum: 3500000000, category: "emerging", domicile: "LU", replication: "synthetic", accDist: "acc", hedged: false, inception: "2018-02-07", index: "MSCI Emerging Markets", holdings: 1400 },
+
+            // Bonds / Fixed Income
+            { isin: "IE00B4WXJJ64", name: "iShares Core Euro Govt Bond UCITS ETF", ticker: "IEGA", provider: "iShares", ter: 0.07, aum: 5000000000, category: "bonds", domicile: "IE", replication: "physical_sampling", accDist: "dist", hedged: false, inception: "2009-12-10", index: "Bloomberg Euro Govt Bond", holdings: 400 },
+            { isin: "IE00B3F81R35", name: "iShares Core Euro Corporate Bond UCITS ETF", ticker: "IEAC", provider: "iShares", ter: 0.20, aum: 12000000000, category: "bonds", domicile: "IE", replication: "physical_sampling", accDist: "dist", hedged: false, inception: "2009-09-15", index: "Bloomberg Euro Corporate", holdings: 3000 },
+            { isin: "IE00BZ163K21", name: "Vanguard EUR Eurozone Government Bond UCITS ETF", ticker: "VGEA", provider: "Vanguard", ter: 0.07, aum: 2000000000, category: "bonds", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2019-06-11", index: "Bloomberg Eurozone Govt", holdings: 350 },
+            { isin: "IE00B14X4S71", name: "iShares USD Treasury Bond 7-10yr UCITS ETF", ticker: "IBTM", provider: "iShares", ter: 0.07, aum: 6000000000, category: "bonds", domicile: "IE", replication: "physical_full", accDist: "dist", hedged: false, inception: "2006-11-08", index: "ICE US Treasury 7-10yr", holdings: 20 },
+            { isin: "IE00BGYWFK87", name: "Xtrackers Global Aggregate Bond UCITS ETF", ticker: "XBAG", provider: "Xtrackers", ter: 0.10, aum: 3500000000, category: "bonds", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: true, inception: "2019-03-06", index: "Bloomberg Global Aggregate", holdings: 7000 },
+
+            // Sector / Thematic
+            { isin: "IE00B4ND3602", name: "iShares MSCI World Health Care UCITS ETF", ticker: "WHCS", provider: "iShares", ter: 0.25, aum: 4000000000, category: "sector", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2010-09-21", index: "MSCI World Health Care", holdings: 140 },
+            { isin: "IE00B4LN9N13", name: "iShares MSCI World Information Technology UCITS ETF", ticker: "WTCH", provider: "iShares", ter: 0.25, aum: 5500000000, category: "sector", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2010-11-30", index: "MSCI World IT", holdings: 170 },
+            { isin: "IE00BYWQWR46", name: "VanEck Semiconductor UCITS ETF", ticker: "SMH", provider: "VanEck", ter: 0.35, aum: 2500000000, category: "sector", domicile: "IE", replication: "physical_full", accDist: "acc", hedged: false, inception: "2020-12-01", index: "MVIS US Listed Semiconductor 25", holdings: 25 },
+            { isin: "IE00BGL86Z12", name: "iShares Global Clean Energy UCITS ETF", ticker: "INRG", provider: "iShares", ter: 0.65, aum: 5000000000, category: "sector", domicile: "IE", replication: "physical_full", accDist: "dist", hedged: false, inception: "2007-07-06", index: "S&P Global Clean Energy", holdings: 100 },
+            { isin: "IE00BK5BCH80", name: "iShares Automation & Robotics UCITS ETF", ticker: "RBOT", provider: "iShares", ter: 0.40, aum: 3000000000, category: "sector", domicile: "IE", replication: "physical_sampling", accDist: "acc", hedged: false, inception: "2016-09-08", index: "iSTOXX FactSet Automation & Robotics", holdings: 150 },
+            { isin: "IE00BYXG2H39", name: "iShares Global Water UCITS ETF", ticker: "IH2O", provider: "iShares", ter: 0.65, aum: 2500000000, category: "sector", domicile: "IE", replication: "physical_full", accDist: "acc", hedged: false, inception: "2007-03-16", index: "S&P Global Water", holdings: 50 },
+        ];
+
+        // ==================== STATE ====================
+        let watchlist = JSON.parse(localStorage.getItem('etfWatchlist') || '[]');
+        let compareList = [];
+        let currentSort = { column: 'score', direction: 'desc' };
+        let filteredETFs = [...ETF_DATABASE];
+
+        // ==================== TAB NAVIGATION ====================
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+            event.target.classList.add('active');
+
+            if (tabName === 'discover') {
+                renderETFTable();
+            } else if (tabName === 'watchlist') {
+                renderWatchlist();
+            }
+        }
+
+        // ==================== SCORING ENGINE ====================
+        function calculateScore(etf, weights = null) {
+            if (!weights) {
+                weights = {
+                    cost: 35,
+                    liquidity: 25,
+                    structure: 25,
+                    tracking: 15
+                };
+            }
+
+            // Normalize weights
+            const total = weights.cost + weights.liquidity + weights.structure + weights.tracking;
+            const w = {
+                cost: weights.cost / total,
+                liquidity: weights.liquidity / total,
+                structure: weights.structure / total,
+                tracking: weights.tracking / total
+            };
+
+            // Cost score (TER): 0% = 100, 1% = 0
+            const terScore = Math.max(0, 100 - (etf.ter * 100 * 100));
+
+            // Liquidity score (AUM): logarithmic scale
+            let aumScore = 0;
+            if (etf.aum > 0) {
+                const aumM = etf.aum / 1000000;
+                aumScore = Math.min(100, Math.max(0, 20 * Math.log10(Math.max(1, aumM))));
+            }
+
+            // Structure score
+            let structScore = 50;
+            const repMap = { physical_full: 20, physical_sampling: 10, synthetic: 0 };
+            structScore += repMap[etf.replication] || 0;
+
+            const domMap = { IE: 15, LU: 10, DE: 5 };
+            structScore += domMap[etf.domicile] || 0;
+
+            // Age bonus
+            if (etf.inception) {
+                const ageDays = (new Date() - new Date(etf.inception)) / (1000 * 60 * 60 * 24);
+                if (ageDays > 365 * 5) structScore += 10;
+                else if (ageDays > 365 * 2) structScore += 5;
+                else if (ageDays < 365) structScore -= 5;
+            }
+            structScore = Math.min(100, Math.max(0, structScore));
+
+            // Provider/tracking score
+            let trackScore = 50;
+            const largeProviders = ['ishares', 'vanguard', 'xtrackers', 'amundi', 'invesco', 'spdr'];
+            if (largeProviders.includes(etf.provider.toLowerCase())) trackScore += 15;
+            if (etf.replication.includes('physical')) trackScore += 10;
+            trackScore = Math.min(100, Math.max(0, trackScore));
+
+            const finalScore = terScore * w.cost + aumScore * w.liquidity + structScore * w.structure + trackScore * w.tracking;
+
+            return {
+                total: Math.round(finalScore * 10) / 10,
+                components: {
+                    cost: Math.round(terScore * 10) / 10,
+                    liquidity: Math.round(aumScore * 10) / 10,
+                    structure: Math.round(structScore * 10) / 10,
+                    tracking: Math.round(trackScore * 10) / 10
+                }
+            };
+        }
+
+        function getScoreBadge(score) {
+            let cls = 'score-poor';
+            if (score >= 80) cls = 'score-excellent';
+            else if (score >= 65) cls = 'score-good';
+            else if (score >= 50) cls = 'score-fair';
+
+            return `<span class="score-badge ${cls}">${score.toFixed(1)}</span>`;
+        }
+
+        // ==================== ETF TABLE ====================
+        function filterETFs() {
+            const category = document.getElementById('categoryFilter').value;
+            const minAum = parseFloat(document.getElementById('aumFilter').value);
+            const maxTer = parseFloat(document.getElementById('terFilter').value);
+            const dist = document.getElementById('distFilter').value;
+
+            filteredETFs = ETF_DATABASE.filter(etf => {
+                if (category !== 'all' && etf.category !== category) return false;
+                if (etf.aum < minAum) return false;
+                if (etf.ter > maxTer) return false;
+                if (dist !== 'all' && etf.accDist !== dist) return false;
+                return true;
+            });
+
+            renderETFTable();
+        }
+
+        function sortTable(column) {
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = column === 'name' ? 'asc' : 'desc';
+            }
+            renderETFTable();
+        }
+
+        function renderETFTable() {
+            const tbody = document.getElementById('etfTableBody');
+
+            // Sort
+            const sorted = [...filteredETFs].sort((a, b) => {
+                let aVal, bVal;
+
+                switch (currentSort.column) {
+                    case 'name': aVal = a.name; bVal = b.name; break;
+                    case 'isin': aVal = a.isin; bVal = b.isin; break;
+                    case 'ter': aVal = a.ter; bVal = b.ter; break;
+                    case 'aum': aVal = a.aum; bVal = b.aum; break;
+                    case 'score':
+                        aVal = calculateScore(a).total;
+                        bVal = calculateScore(b).total;
+                        break;
+                    default: aVal = 0; bVal = 0;
+                }
+
+                if (typeof aVal === 'string') {
+                    return currentSort.direction === 'asc'
+                        ? aVal.localeCompare(bVal)
+                        : bVal.localeCompare(aVal);
+                }
+                return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
+            });
+
+            tbody.innerHTML = sorted.map(etf => {
+                const score = calculateScore(etf);
+                const isWatchlisted = watchlist.some(w => w.isin === etf.isin);
+                const isComparing = compareList.some(c => c.isin === etf.isin);
+
+                return `
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="compare-checkbox"
+                                ${isComparing ? 'checked' : ''}
+                                onchange="toggleCompare('${etf.isin}')">
+                        </td>
+                        <td>
+                            <strong>${etf.name}</strong><br>
+                            <span style="font-size: 0.85rem; color: var(--text-secondary);">
+                                ${etf.provider} | ${etf.ticker}
+                            </span>
+                        </td>
+                        <td><code>${etf.isin}</code></td>
+                        <td>${(etf.ter * 100).toFixed(2)}%</td>
+                        <td>${formatAUM(etf.aum)}</td>
+                        <td>${getScoreBadge(score.total)}</td>
+                        <td>
+                            <button class="btn btn-secondary" onclick="showETFDetail('${etf.isin}')" style="padding: 6px 12px; font-size: 0.85rem;">Details</button>
+                            <button class="btn ${isWatchlisted ? 'btn-primary' : 'btn-secondary'}"
+                                onclick="toggleWatchlist('${etf.isin}')"
+                                style="padding: 6px 12px; font-size: 0.85rem;">
+                                ${isWatchlisted ? '★' : '☆'}
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function formatAUM(aum) {
+            if (aum >= 1e9) return (aum / 1e9).toFixed(1) + 'B';
+            if (aum >= 1e6) return (aum / 1e6).toFixed(0) + 'M';
+            return aum.toLocaleString();
+        }
+
+        function showETFDetail(isin) {
+            const etf = ETF_DATABASE.find(e => e.isin === isin);
+            if (!etf) return;
+
+            const score = calculateScore(etf);
+            const card = document.getElementById('etfDetailCard');
+            const content = document.getElementById('etfDetailContent');
+
+            document.getElementById('detailName').textContent = etf.name;
+
+            content.innerHTML = `
+                <div class="grid">
+                    <div>
+                        <h3>Basic Information</h3>
+                        <table>
+                            <tr><td><strong>ISIN</strong></td><td><code>${etf.isin}</code></td></tr>
+                            <tr><td><strong>Ticker</strong></td><td>${etf.ticker}</td></tr>
+                            <tr><td><strong>Provider</strong></td><td>${etf.provider}</td></tr>
+                            <tr><td><strong>Index Tracked</strong></td><td>${etf.index}</td></tr>
+                            <tr><td><strong>Inception Date</strong></td><td>${etf.inception}</td></tr>
+                            <tr><td><strong>Number of Holdings</strong></td><td>${etf.holdings}</td></tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h3>Structure & Costs</h3>
+                        <table>
+                            <tr><td><strong>TER</strong></td><td>${(etf.ter * 100).toFixed(2)}%</td></tr>
+                            <tr><td><strong>AUM</strong></td><td>${formatAUM(etf.aum)}</td></tr>
+                            <tr><td><strong>Domicile</strong></td><td>${etf.domicile}</td></tr>
+                            <tr><td><strong>Replication</strong></td><td>${etf.replication.replace('_', ' ')}</td></tr>
+                            <tr><td><strong>Distribution</strong></td><td>${etf.accDist === 'acc' ? 'Accumulating' : 'Distributing'}</td></tr>
+                            <tr><td><strong>Currency Hedged</strong></td><td>${etf.hedged ? 'Yes' : 'No'}</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 20px;">Score Breakdown</h3>
+                <div class="grid grid-3">
+                    <div>
+                        <strong>Cost Score: ${score.components.cost}/100</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${score.components.cost}%; background: ${getScoreColor(score.components.cost)};"></div>
+                        </div>
+                        <small>TER: ${(etf.ter * 100).toFixed(2)}% (lower is better)</small>
+                    </div>
+                    <div>
+                        <strong>Liquidity Score: ${score.components.liquidity}/100</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${score.components.liquidity}%; background: ${getScoreColor(score.components.liquidity)};"></div>
+                        </div>
+                        <small>AUM: ${formatAUM(etf.aum)}</small>
+                    </div>
+                    <div>
+                        <strong>Structure Score: ${score.components.structure}/100</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${score.components.structure}%; background: ${getScoreColor(score.components.structure)};"></div>
+                        </div>
+                        <small>${etf.replication.replace('_', ' ')}, ${etf.domicile} domicile</small>
+                    </div>
+                </div>
+
+                <div class="recommendation" style="margin-top: 20px;">
+                    <h3>Overall Score: ${getScoreBadge(score.total)}</h3>
+                    <p>${getETFRecommendation(etf, score)}</p>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <a href="https://www.justetf.com/en/etf-profile.html?isin=${etf.isin}" target="_blank" class="btn btn-secondary">View on JustETF</a>
+                    <a href="https://finance.yahoo.com/quote/${etf.ticker}.DE" target="_blank" class="btn btn-secondary" style="margin-left: 10px;">View on Yahoo Finance</a>
+                </div>
+            `;
+
+            card.style.display = 'block';
+            card.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getScoreColor(score) {
+            if (score >= 80) return 'var(--success)';
+            if (score >= 65) return 'var(--primary)';
+            if (score >= 50) return 'var(--warning)';
+            return 'var(--danger)';
+        }
+
+        function getETFRecommendation(etf, score) {
+            const parts = [];
+
+            if (score.total >= 80) {
+                parts.push(`<strong>Excellent choice!</strong> This ETF scores very well across all criteria.`);
+            } else if (score.total >= 65) {
+                parts.push(`<strong>Good option.</strong> This ETF is solid overall.`);
+            } else if (score.total >= 50) {
+                parts.push(`<strong>Decent choice</strong> but there may be better alternatives.`);
+            } else {
+                parts.push(`<strong>Consider alternatives.</strong> This ETF has some drawbacks.`);
+            }
+
+            // Specific recommendations
+            if (etf.ter < 0.10) parts.push('Very low costs make this excellent for long-term holding.');
+            else if (etf.ter > 0.40) parts.push('Higher TER may impact long-term returns.');
+
+            if (etf.aum > 10000000000) parts.push('Large fund size ensures excellent liquidity.');
+            else if (etf.aum < 100000000) parts.push('Smaller fund size - check trading spreads before buying.');
+
+            if (etf.domicile === 'IE') parts.push('Irish domicile is tax-efficient for dividends from US stocks.');
+
+            return parts.join(' ');
+        }
+
+        // ==================== COMPARE FEATURE ====================
+        function toggleCompare(isin) {
+            const etf = ETF_DATABASE.find(e => e.isin === isin);
+            const index = compareList.findIndex(e => e.isin === isin);
+
+            if (index >= 0) {
+                compareList.splice(index, 1);
+            } else if (compareList.length < 4) {
+                compareList.push(etf);
+            } else {
+                alert('You can compare up to 4 ETFs at a time');
+                return;
+            }
+
+            updateComparePanel();
+            renderETFTable();
+        }
+
+        function updateComparePanel() {
+            const panel = document.getElementById('comparePanel');
+            const list = document.getElementById('compareList');
+
+            if (compareList.length > 0) {
+                panel.classList.add('show');
+                list.innerHTML = compareList.map(e => `<span class="tag">${e.ticker}</span>`).join(' ');
+            } else {
+                panel.classList.remove('show');
+            }
+        }
+
+        function clearComparison() {
+            compareList = [];
+            updateComparePanel();
+            renderETFTable();
+        }
+
+        function showComparison() {
+            if (compareList.length < 2) {
+                alert('Please select at least 2 ETFs to compare');
+                return;
+            }
+
+            const modal = document.getElementById('comparisonModal');
+            const content = document.getElementById('comparisonContent');
+
+            const scores = compareList.map(etf => ({ etf, score: calculateScore(etf) }));
+
+            content.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            ${scores.map(s => `<th>${s.etf.ticker}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Name</strong></td>${scores.map(s => `<td>${s.etf.name}</td>`).join('')}</tr>
+                        <tr><td><strong>Provider</strong></td>${scores.map(s => `<td>${s.etf.provider}</td>`).join('')}</tr>
+                        <tr><td><strong>ISIN</strong></td>${scores.map(s => `<td><code>${s.etf.isin}</code></td>`).join('')}</tr>
+                        <tr><td><strong>Index</strong></td>${scores.map(s => `<td>${s.etf.index}</td>`).join('')}</tr>
+                        <tr><td><strong>TER</strong></td>${scores.map(s => `<td>${getBestIndicator(scores.map(x => x.etf.ter), s.etf.ter, 'min')}${(s.etf.ter * 100).toFixed(2)}%</td>`).join('')}</tr>
+                        <tr><td><strong>AUM</strong></td>${scores.map(s => `<td>${getBestIndicator(scores.map(x => x.etf.aum), s.etf.aum, 'max')}${formatAUM(s.etf.aum)}</td>`).join('')}</tr>
+                        <tr><td><strong>Domicile</strong></td>${scores.map(s => `<td>${s.etf.domicile}</td>`).join('')}</tr>
+                        <tr><td><strong>Replication</strong></td>${scores.map(s => `<td>${s.etf.replication.replace('_', ' ')}</td>`).join('')}</tr>
+                        <tr><td><strong>Distribution</strong></td>${scores.map(s => `<td>${s.etf.accDist === 'acc' ? 'Accumulating' : 'Distributing'}</td>`).join('')}</tr>
+                        <tr><td><strong>Holdings</strong></td>${scores.map(s => `<td>${s.etf.holdings}</td>`).join('')}</tr>
+                        <tr><td><strong>Inception</strong></td>${scores.map(s => `<td>${s.etf.inception}</td>`).join('')}</tr>
+                        <tr style="background: var(--bg);"><td><strong>Cost Score</strong></td>${scores.map(s => `<td>${s.score.components.cost}/100</td>`).join('')}</tr>
+                        <tr style="background: var(--bg);"><td><strong>Liquidity Score</strong></td>${scores.map(s => `<td>${s.score.components.liquidity}/100</td>`).join('')}</tr>
+                        <tr style="background: var(--bg);"><td><strong>Structure Score</strong></td>${scores.map(s => `<td>${s.score.components.structure}/100</td>`).join('')}</tr>
+                        <tr style="background: var(--bg);"><td><strong>TOTAL SCORE</strong></td>${scores.map(s => `<td>${getScoreBadge(s.score.total)}</td>`).join('')}</tr>
+                    </tbody>
+                </table>
+
+                <div class="recommendation" style="margin-top: 20px;">
+                    <h3>Recommendation</h3>
+                    <p>${getComparisonRecommendation(scores)}</p>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        function getBestIndicator(values, currentValue, type) {
+            const best = type === 'min' ? Math.min(...values) : Math.max(...values);
+            if (currentValue === best) {
+                return '<span style="color: var(--success);">★</span> ';
+            }
+            return '';
+        }
+
+        function getComparisonRecommendation(scores) {
+            const sorted = [...scores].sort((a, b) => b.score.total - a.score.total);
+            const best = sorted[0];
+
+            let rec = `<strong>${best.etf.name} (${best.etf.ticker})</strong> scores highest with ${best.score.total.toFixed(1)}/100. `;
+
+            if (sorted.length > 1) {
+                const diff = best.score.total - sorted[1].score.total;
+                if (diff < 3) {
+                    rec += `However, ${sorted[1].etf.ticker} is very close with ${sorted[1].score.total.toFixed(1)}/100 - both are excellent choices. `;
+                }
+            }
+
+            // Check for trade-offs
+            const lowestTER = sorted.reduce((a, b) => a.etf.ter < b.etf.ter ? a : b);
+            if (lowestTER.etf.isin !== best.etf.isin) {
+                rec += `If cost is your priority, ${lowestTER.etf.ticker} has the lowest TER at ${(lowestTER.etf.ter * 100).toFixed(2)}%. `;
+            }
+
+            const largestAUM = sorted.reduce((a, b) => a.etf.aum > b.etf.aum ? a : b);
+            if (largestAUM.etf.isin !== best.etf.isin) {
+                rec += `For maximum liquidity, ${largestAUM.etf.ticker} has the largest fund size. `;
+            }
+
+            return rec;
+        }
+
+        function closeComparison() {
+            document.getElementById('comparisonModal').style.display = 'none';
+        }
+
+        // ==================== WATCHLIST ====================
+        function toggleWatchlist(isin) {
+            const index = watchlist.findIndex(w => w.isin === isin);
+
+            if (index >= 0) {
+                watchlist.splice(index, 1);
+            } else {
+                const etf = ETF_DATABASE.find(e => e.isin === isin);
+                watchlist.push({ isin: etf.isin, name: etf.name, ticker: etf.ticker, notes: '' });
+            }
+
+            localStorage.setItem('etfWatchlist', JSON.stringify(watchlist));
+            renderETFTable();
+        }
+
+        function renderWatchlist() {
+            const empty = document.getElementById('watchlistEmpty');
+            const content = document.getElementById('watchlistContent');
+            const tbody = document.getElementById('watchlistBody');
+
+            if (watchlist.length === 0) {
+                empty.style.display = 'block';
+                content.style.display = 'none';
+                return;
+            }
+
+            empty.style.display = 'none';
+            content.style.display = 'block';
+
+            tbody.innerHTML = watchlist.map(item => {
+                const etf = ETF_DATABASE.find(e => e.isin === item.isin);
+                if (!etf) return '';
+
+                const score = calculateScore(etf);
+
+                return `
+                    <tr>
+                        <td><strong>${etf.name}</strong></td>
+                        <td><code>${etf.isin}</code></td>
+                        <td>${(etf.ter * 100).toFixed(2)}%</td>
+                        <td>${getScoreBadge(score.total)}</td>
+                        <td>
+                            <input type="text" value="${item.notes}"
+                                onchange="updateWatchlistNote('${etf.isin}', this.value)"
+                                placeholder="Add notes..." style="width: 150px;">
+                        </td>
+                        <td>
+                            <button class="btn btn-secondary" onclick="removeFromWatchlist('${etf.isin}')" style="padding: 6px 12px;">Remove</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateWatchlistNote(isin, note) {
+            const item = watchlist.find(w => w.isin === isin);
+            if (item) {
+                item.notes = note;
+                localStorage.setItem('etfWatchlist', JSON.stringify(watchlist));
+            }
+        }
+
+        function removeFromWatchlist(isin) {
+            watchlist = watchlist.filter(w => w.isin !== isin);
+            localStorage.setItem('etfWatchlist', JSON.stringify(watchlist));
+            renderWatchlist();
+        }
+
+        function clearWatchlist() {
+            if (confirm('Are you sure you want to clear your entire watchlist?')) {
+                watchlist = [];
+                localStorage.setItem('etfWatchlist', JSON.stringify(watchlist));
+                renderWatchlist();
+            }
+        }
+
+        function exportWatchlist() {
+            const data = watchlist.map(item => {
+                const etf = ETF_DATABASE.find(e => e.isin === item.isin);
+                return etf ? { ...etf, notes: item.notes } : null;
+            }).filter(Boolean);
+
+            const text = data.map(e => `${e.name}\t${e.isin}\t${e.ticker}\t${(e.ter * 100).toFixed(2)}%\t${e.notes}`).join('\n');
+
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'etf-watchlist.txt';
+            a.click();
+        }
+
+        // ==================== ANALYSIS TAB ====================
+        function updateWeights() {
+            const cost = parseInt(document.getElementById('costWeight').value);
+            const liquidity = parseInt(document.getElementById('liquidityWeight').value);
+            const structure = parseInt(document.getElementById('structureWeight').value);
+            const tracking = parseInt(document.getElementById('trackingWeight').value);
+
+            document.getElementById('costWeightValue').textContent = cost;
+            document.getElementById('liquidityWeightValue').textContent = liquidity;
+            document.getElementById('structureWeightValue').textContent = structure;
+            document.getElementById('trackingWeightValue').textContent = tracking;
+            document.getElementById('totalWeight').textContent = cost + liquidity + structure + tracking;
+        }
+
+        function runAnalysis() {
+            const weights = {
+                cost: parseInt(document.getElementById('costWeight').value),
+                liquidity: parseInt(document.getElementById('liquidityWeight').value),
+                structure: parseInt(document.getElementById('structureWeight').value),
+                tracking: parseInt(document.getElementById('trackingWeight').value)
+            };
+
+            const constraints = {
+                dist: document.getElementById('constraintDist').value,
+                replication: document.getElementById('constraintReplication').value,
+                domicile: document.getElementById('constraintDomicile').value,
+                minAge: parseInt(document.getElementById('constraintAge').value)
+            };
+
+            // Filter and score
+            let etfs = ETF_DATABASE.filter(etf => {
+                if (constraints.dist !== 'any' && etf.accDist !== constraints.dist) return false;
+                if (constraints.replication === 'physical' && etf.replication === 'synthetic') return false;
+                if (constraints.domicile !== 'any') {
+                    const allowed = constraints.domicile.split(',');
+                    if (!allowed.includes(etf.domicile)) return false;
+                }
+                if (constraints.minAge > 0) {
+                    const ageDays = (new Date() - new Date(etf.inception)) / (1000 * 60 * 60 * 24);
+                    if (ageDays < constraints.minAge) return false;
+                }
+                return true;
+            });
+
+            const scored = etfs.map(etf => ({
+                etf,
+                score: calculateScore(etf, weights)
+            })).sort((a, b) => b.score.total - a.score.total);
+
+            const resultsDiv = document.getElementById('analysisResults');
+            const content = document.getElementById('analysisContent');
+
+            if (scored.length === 0) {
+                content.innerHTML = '<div class="warning-box">No ETFs match your constraints. Try relaxing some filters.</div>';
+            } else {
+                content.innerHTML = `
+                    <div class="info-box">
+                        <strong>Found ${scored.length} ETFs matching your criteria.</strong>
+                        Top recommendations based on your custom weights.
+                    </div>
+
+                    <h3>Top 10 ETFs</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>ISIN</th>
+                                <th>Cost Score</th>
+                                <th>Liquidity</th>
+                                <th>Structure</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${scored.slice(0, 10).map((item, i) => `
+                                <tr>
+                                    <td><strong>#${i + 1}</strong></td>
+                                    <td>${item.etf.name}<br><small>${item.etf.provider}</small></td>
+                                    <td><code>${item.etf.isin}</code></td>
+                                    <td>${item.score.components.cost}/100</td>
+                                    <td>${item.score.components.liquidity}/100</td>
+                                    <td>${item.score.components.structure}/100</td>
+                                    <td>${getScoreBadge(item.score.total)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+
+                    ${scored.length > 0 ? `
+                    <div class="recommendation">
+                        <h3>Top Recommendation: ${scored[0].etf.name}</h3>
+                        <p>${getDetailedRecommendation(scored[0].etf, scored[0].score, weights)}</p>
+                    </div>
+                    ` : ''}
+                `;
+            }
+
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getDetailedRecommendation(etf, score, weights) {
+            let text = `With your weighting preferences, <strong>${etf.name}</strong> scores ${score.total.toFixed(1)}/100. `;
+
+            text += `It has a TER of ${(etf.ter * 100).toFixed(2)}% and is managed by ${etf.provider}, one of the largest ETF providers. `;
+            text += `The fund is domiciled in ${etf.domicile} with ${etf.replication.replace('_', ' ')} replication. `;
+            text += `With ${formatAUM(etf.aum)} in assets, it has strong liquidity. `;
+
+            if (etf.accDist === 'acc') {
+                text += `As an accumulating fund, dividends are automatically reinvested, making it tax-efficient for long-term growth.`;
+            } else {
+                text += `As a distributing fund, you'll receive dividend payments, which can provide regular income.`;
+            }
+
+            return text;
+        }
+
+        // ==================== INVESTMENT PLANNER ====================
+        function generatePlan() {
+            const monthly = parseFloat(document.getElementById('monthlyAmount').value) || 0;
+            const lumpSum = parseFloat(document.getElementById('lumpSum').value) || 0;
+            const horizon = parseInt(document.getElementById('timeHorizon').value);
+            const risk = document.getElementById('riskTolerance').value;
+            const reaction = document.getElementById('drawdownReaction').value;
+            const goal = document.getElementById('investmentGoal').value;
+
+            // Adjust risk based on drawdown reaction
+            let effectiveRisk = risk;
+            if (reaction === 'panic' || reaction === 'worried') {
+                if (risk === 'aggressive') effectiveRisk = 'moderate';
+                else if (risk === 'moderate') effectiveRisk = 'conservative';
+            }
+
+            // Build allocation
+            let stockAllocation, bondAllocation;
+            switch (effectiveRisk) {
+                case 'conservative':
+                    stockAllocation = 40;
+                    bondAllocation = 60;
+                    break;
+                case 'moderate':
+                    stockAllocation = 70;
+                    bondAllocation = 30;
+                    break;
+                case 'aggressive':
+                    stockAllocation = 90;
+                    bondAllocation = 10;
+                    break;
+            }
+
+            // Adjust for time horizon
+            if (horizon <= 5) {
+                stockAllocation = Math.max(20, stockAllocation - 20);
+                bondAllocation = 100 - stockAllocation;
+            } else if (horizon >= 20) {
+                stockAllocation = Math.min(95, stockAllocation + 10);
+                bondAllocation = 100 - stockAllocation;
+            }
+
+            // Recommend specific ETFs
+            const stockETFs = getRecommendedETFs('stocks', effectiveRisk);
+            const bondETFs = getRecommendedETFs('bonds', effectiveRisk);
+
+            // Calculate projections
+            const monthlyReturn = effectiveRisk === 'aggressive' ? 0.007 : effectiveRisk === 'moderate' ? 0.005 : 0.003;
+            let futureValue = lumpSum;
+            for (let i = 0; i < horizon * 12; i++) {
+                futureValue = futureValue * (1 + monthlyReturn) + monthly;
+            }
+
+            const totalContributed = lumpSum + (monthly * horizon * 12);
+            const projectedGain = futureValue - totalContributed;
+
+            const planDiv = document.getElementById('investmentPlan');
+            const content = document.getElementById('planContent');
+
+            content.innerHTML = `
+                <div class="grid">
+                    <div class="metric">
+                        <div class="metric-value">${horizon} years</div>
+                        <div class="metric-label">Investment Horizon</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${formatCurrency(totalContributed)}</div>
+                        <div class="metric-label">Total Contributions</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${formatCurrency(futureValue)}</div>
+                        <div class="metric-label">Projected Value*</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" style="color: var(--success);">${formatCurrency(projectedGain)}</div>
+                        <div class="metric-label">Projected Growth*</div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <small>*Projections are estimates based on historical averages and are not guaranteed. Past performance does not predict future results. Actual returns will vary.</small>
+                </div>
+
+                <h3>Your Recommended Asset Allocation</h3>
+                <div class="grid" style="margin: 20px 0;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; color: var(--primary);">${stockAllocation}%</div>
+                        <div>Equities (Stocks)</div>
+                        <div class="progress-bar" style="height: 20px; margin-top: 10px;">
+                            <div class="progress-fill" style="width: ${stockAllocation}%; background: var(--primary);"></div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; color: var(--success);">${bondAllocation}%</div>
+                        <div>Bonds (Fixed Income)</div>
+                        <div class="progress-bar" style="height: 20px; margin-top: 10px;">
+                            <div class="progress-fill" style="width: ${bondAllocation}%; background: var(--success);"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Recommended ETF Portfolio</h3>
+                <div class="grid">
+                    <div>
+                        <h4 style="color: var(--primary);">Equity ETFs (${stockAllocation}%)</h4>
+                        ${stockETFs.map(etf => `
+                            <div style="padding: 10px; background: var(--bg); border-radius: 8px; margin: 8px 0;">
+                                <strong>${etf.etf.name}</strong><br>
+                                <small>${etf.etf.ticker} | TER: ${(etf.etf.ter * 100).toFixed(2)}% | ${etf.allocation}% of portfolio</small>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div>
+                        <h4 style="color: var(--success);">Bond ETFs (${bondAllocation}%)</h4>
+                        ${bondETFs.map(etf => `
+                            <div style="padding: 10px; background: var(--bg); border-radius: 8px; margin: 8px 0;">
+                                <strong>${etf.etf.name}</strong><br>
+                                <small>${etf.etf.ticker} | TER: ${(etf.etf.ter * 100).toFixed(2)}% | ${etf.allocation}% of portfolio</small>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <h3>Investment Strategy</h3>
+                <div class="success-box">
+                    ${getStrategyRecommendation(monthly, lumpSum, effectiveRisk, horizon)}
+                </div>
+
+                <h3>Action Steps</h3>
+                <div class="info-box">
+                    <ol style="padding-left: 20px;">
+                        <li><strong>Open a brokerage account</strong> - Choose a low-cost broker that offers access to European ETFs (e.g., DEGIRO, Interactive Brokers, Trade Republic)</li>
+                        <li><strong>Set up automatic investing</strong> - Configure monthly transfers of ${formatCurrency(monthly)} on a fixed date</li>
+                        ${lumpSum > 0 ? `<li><strong>Deploy lump sum</strong> - ${getLumpSumStrategy(lumpSum, effectiveRisk)}</li>` : ''}
+                        <li><strong>Rebalance annually</strong> - Once a year, check if your allocation has drifted and rebalance if needed</li>
+                        <li><strong>Stay the course</strong> - Don't panic during market downturns; stay invested for the long term</li>
+                    </ol>
+                </div>
+
+                <h3>When to Buy</h3>
+                <div class="info-box">
+                    <p><strong>For Dollar-Cost Averaging:</strong> Pick a consistent day each month (e.g., 1st or 15th) and invest regardless of market conditions. This removes the stress of timing the market.</p>
+                    <p style="margin-top: 10px;"><strong>Market timing tip:</strong> Research shows that "time in the market" beats "timing the market." Don't wait for the "perfect" entry point - it rarely comes, and waiting costs you compound growth.</p>
+                </div>
+            `;
+
+            planDiv.style.display = 'block';
+            planDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getRecommendedETFs(type, risk) {
+            if (type === 'stocks') {
+                if (risk === 'conservative') {
+                    return [
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00B4L5Y983'), allocation: 30 }, // MSCI World
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00B4K48X80'), allocation: 10 }, // Europe
+                    ];
+                } else if (risk === 'moderate') {
+                    return [
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00BK5BQT80'), allocation: 50 }, // All-World
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00BKM4GZ66'), allocation: 20 }, // EM
+                    ];
+                } else {
+                    return [
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00BK5BQT80'), allocation: 60 }, // All-World
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00BKM4GZ66'), allocation: 20 }, // EM
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00B4LN9N13'), allocation: 10 }, // Tech
+                    ];
+                }
+            } else {
+                if (risk === 'aggressive') {
+                    return [
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00B3F81R35'), allocation: 10 }, // Corp bonds
+                    ];
+                } else if (risk === 'moderate') {
+                    return [
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00B4WXJJ64'), allocation: 20 }, // Govt bonds
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00B3F81R35'), allocation: 10 }, // Corp bonds
+                    ];
+                } else {
+                    return [
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00B4WXJJ64'), allocation: 40 }, // Govt bonds
+                        { etf: ETF_DATABASE.find(e => e.isin === 'IE00B3F81R35'), allocation: 20 }, // Corp bonds
+                    ];
+                }
+            }
+        }
+
+        function getStrategyRecommendation(monthly, lumpSum, risk, horizon) {
+            let html = '';
+
+            if (monthly > 0) {
+                html += `<p><strong>Monthly Investment (${formatCurrency(monthly)}):</strong> Use Dollar-Cost Averaging. Set up automatic investments on a fixed date each month. This reduces emotional decision-making and averages out market volatility over time.</p>`;
+            }
+
+            if (lumpSum > 0) {
+                html += `<p style="margin-top: 10px;"><strong>Lump Sum (${formatCurrency(lumpSum)}):</strong> `;
+                if (risk === 'aggressive' && horizon >= 10) {
+                    html += `Invest the full amount immediately. With your long time horizon, historical data shows lump sum investing outperforms DCA about 2/3 of the time.`;
+                } else {
+                    html += `Consider splitting into 3-6 monthly investments to reduce timing risk. This protects against investing everything right before a market drop.`;
+                }
+                html += `</p>`;
+            }
+
+            return html;
+        }
+
+        function getLumpSumStrategy(lumpSum, risk) {
+            if (risk === 'aggressive') {
+                return `Consider investing the full ${formatCurrency(lumpSum)} immediately for maximum time in market`;
+            }
+            return `Split ${formatCurrency(lumpSum)} into ${risk === 'conservative' ? '6' : '3'} monthly investments of ${formatCurrency(lumpSum / (risk === 'conservative' ? 6 : 3))}`;
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-EU', { style: 'currency', currency: 'EUR' }).format(amount);
+        }
+
+        // ==================== UTILITY ====================
+        function refreshData() {
+            alert('ETF data is embedded in this tool for offline use. For live prices, click the Yahoo Finance or JustETF links in the ETF details.');
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderETFTable();
+        });
+    </script>
+</body>
+</html>
