@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foody food week</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fbfcff;
+      --ink:#0f172a;
+      --muted:#5b6472;
+
+      --stroke:rgba(15,23,42,0.10);
+      --stroke2:rgba(15,23,42,0.075);
+
+      --pro:#14b8a6;     /* teal */
+      --fish:#3b82f6;    /* blue */
+      --boost:#f97316;   /* orange */
+      --y:#a78bfa;       /* lavender */
+      --s:#22c55e;       /* green */
+
+      --card: rgba(255,255,255,0.86);
+      --radius:16px;
+      --radius2:12px;
+
+      --gap:6px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--ink);
+      background:
+        radial-gradient(1000px 600px at 10% -10%, rgba(167,139,250,0.10), transparent 60%),
+        radial-gradient(900px 550px at 90% 0%, rgba(20,184,166,0.08), transparent 58%),
+        radial-gradient(900px 650px at 55% 120%, rgba(59,130,246,0.08), transparent 55%),
+        var(--bg);
+      padding:14px;
+      overflow:hidden; /* print-like */
+    }
+
+    .sheet{
+      max-width: 1520px;
+      margin:0 auto;
+      height: calc(100vh - 28px);
+      display:flex;
+      flex-direction:column;
+      gap: var(--gap);
+      min-height: 740px;
+    }
+
+    /* Header */
+    .topbar{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      padding: 2px 2px 0;
+      flex: 0 0 auto;
+    }
+    h1{
+      margin:0;
+      font-size:23px;
+      letter-spacing:-0.03em;
+      line-height:1.05;
+      font-weight:850;
+    }
+    .meta{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:10px;
+      white-space:nowrap;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--stroke2);
+      background: rgba(255,255,255,0.70);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 1px 0 rgba(15,23,42,0.03);
+    }
+    .pill.pro{ border-color: rgba(20,184,166,0.22); background: rgba(20,184,166,0.07); color: rgba(7,95,86,0.95); }
+    .pill.fish{ border-color: rgba(59,130,246,0.24); background: rgba(59,130,246,0.07); color: #0b2a74; }
+    .pill.people{ border-color: rgba(15,23,42,0.10); }
+    .ico{ width:12px; height:12px; flex:0 0 auto; }
+    .ico.pro{ stroke: var(--pro); }
+    .ico.fish{ stroke: var(--fish); }
+    .ico.muted{ stroke: rgba(15,23,42,0.55); }
+
+    .main{ flex: 1 1 auto; min-height:0; display:flex; }
+
+    /* Week grid: 7 days + sidebar */
+    .week{
+      /* Arrange the seven days, grocery and booster panels in a 3×3 grid to
+         minimize the total height. This places Monday–Wednesday on the first
+         row, Thursday–Saturday on the second row and Sunday with the two side
+         panels on the third row. */
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--gap);
+      align-items:stretch;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .day, .sidePanel{
+      min-width:0;
+      border:1px solid var(--stroke2);
+      border-radius:var(--radius);
+      background: var(--card);
+      backdrop-filter: blur(6px);
+      padding:7px 7px 7px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-height:0;
+      box-shadow:
+        0 1px 0 rgba(15,23,42,0.03),
+        0 10px 28px rgba(15,23,42,0.05);
+    }
+
+    .dayhead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding-bottom:7px;
+      border-bottom:1px solid rgba(15,23,42,0.07);
+      min-width:0;
+    }
+
+    .dow{
+      min-width:0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:850;
+      font-size:11.5px;
+      letter-spacing:-0.02em;
+      line-height:1.1;
+    }
+    .dayname{
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .dot{
+      width:9px; height:9px; border-radius:999px;
+      background: rgba(15,23,42,0.18);
+      box-shadow: 0 0 0 3px rgba(15,23,42,0.05);
+      flex:0 0 auto;
+    }
+    .dot.mon{ background: rgba(167,139,250,0.95); box-shadow:0 0 0 3px rgba(167,139,250,0.16); }
+    .dot.tue{ background: rgba(20,184,166,0.95); box-shadow:0 0 0 3px rgba(20,184,166,0.15); }
+    .dot.wed{ background: rgba(59,130,246,0.95); box-shadow:0 0 0 3px rgba(59,130,246,0.16); }
+    .dot.thu{ background: rgba(249,115,22,0.92); box-shadow:0 0 0 3px rgba(249,115,22,0.14); }
+    .dot.fri{ background: rgba(34,197,94,0.92); box-shadow:0 0 0 3px rgba(34,197,94,0.14); }
+    .dot.sat{ background: rgba(236,72,153,0.88); box-shadow:0 0 0 3px rgba(236,72,153,0.12); }
+    .dot.sun{ background: rgba(99,102,241,0.92); box-shadow:0 0 0 3px rgba(99,102,241,0.14); }
+
+    /* People initials */
+    .who{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      flex:0 0 auto;
+    }
+    .who .userico{ width:13px; height:13px; stroke: rgba(15,23,42,0.45); }
+    .ava{
+      width:18px; height:18px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:-0.02em;
+      border:1px solid rgba(15,23,42,0.10);
+    }
+    .ava.y{ background: rgba(167,139,250,0.16); color:#3f1d84; border-color: rgba(167,139,250,0.30); }
+    .ava.s{ background: rgba(34,197,94,0.12); color:#14532d; border-color: rgba(34,197,94,0.28); }
+
+    /* Fish day styling */
+    .day.fish{
+      border-color: rgba(59,130,246,0.25);
+      background: linear-gradient(180deg, rgba(59,130,246,0.10), rgba(255,255,255,0.86) 55%);
+      position:relative;
+    }
+    .day.fish:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:5px;
+      border-radius:var(--radius) 0 0 var(--radius);
+      background: rgba(59,130,246,0.85);
+    }
+    .fishpill{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:10.9px;
+      font-weight:850;
+      color: rgba(11,42,116,0.96);
+      border: 1px solid rgba(59,130,246,0.22);
+      background: rgba(59,130,246,0.10);
+      white-space: nowrap;
+      flex:0 0 auto;
+    }
+
+    /* Meals */
+    .meals{
+      display:grid;
+      grid-template-rows: auto auto;
+      align-content:start;
+      gap:6px;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .meal{
+      border:1px solid rgba(15,23,42,0.07);
+      background: rgba(255,255,255,0.72);
+      border-radius:var(--radius2);
+      padding:8px 8px 7px;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .mealtitle{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:8px;
+      margin:0;
+      font-size:12.0px;
+      font-weight:900;
+      letter-spacing:-0.01em;
+      line-height:1.18;
+      min-width:0;
+    }
+    .mealtitle .left{
+      min-width:0;
+      display:flex;
+      align-items:flex-start;
+      gap:7px;
+    }
+    .mealtitle .name{
+      min-width:0;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      hyphens:auto;
+    }
+
+    .tagY{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:18px; height:18px;
+      border-radius:999px;
+      border:1px solid rgba(167,139,250,0.30);
+      background: rgba(167,139,250,0.12);
+      color:#3f1d84;
+      font-size:10px;
+      font-weight:950;
+      white-space:nowrap;
+      flex:0 0 auto;
+      margin-top: 1px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 7px;
+      border-radius:999px;
+      font-size:9px;
+      font-weight:950;
+      white-space:nowrap;
+      border:1px solid rgba(20,184,166,0.22);
+      background: rgba(20,184,166,0.10);
+      color: rgba(7,95,86,0.95);
+      flex:0 0 auto;
+    }
+    .day.fish .badge{
+      border-color: rgba(59,130,246,0.22);
+      background: rgba(59,130,246,0.10);
+      color:#0b2a74;
+    }
+
+    .line{
+      display:flex;
+      align-items:flex-start;
+      gap:7px;
+      color:var(--muted);
+      font-size:9px;
+      line-height:1.25;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      hyphens:auto;
+      min-width:0;
+    }
+    .line strong{
+      color: rgba(124,45,18,0.95);
+      font-weight:950;
+      margin-right:2px;
+    }
+    .mutedDot{
+      width:5px; height:5px; border-radius:999px;
+      background: rgba(15,23,42,0.18);
+      margin-top: 4px;
+      flex:0 0 auto;
+    }
+    .boostDot{
+      width:5px; height:5px; border-radius:999px;
+      background: rgba(249,115,22,0.78);
+      margin-top: 4px;
+      flex:0 0 auto;
+    }
+
+    /* Side panels represent the grocery backbone and protein boosters.  They are
+       inserted directly into the week grid as separate columns. */
+    .sidePanel{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+      padding:9px;
+    }
+
+    .sidePanel h2{
+      margin:0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:10.5px;
+      letter-spacing:-0.01em;
+      font-weight:950;
+    }
+    .sidePanel .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:9px;
+      line-height:1.28;
+    }
+
+    /* In the grocery panel, display ingredient categories in two columns so
+       they spread horizontally across the available width. */
+    .rows{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:7px;
+    }
+    .row{
+      border:1px solid rgba(15,23,42,0.07);
+      background: rgba(255,255,255,0.70);
+      border-radius:12px;
+      padding:7px 8px;
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      min-width:0;
+      /* Allow each row to grow to fill its grid cell but not shrink smaller
+         than its content. */
+      flex:1 1 auto;
+    }
+    .row .k{
+      font-size:9px;
+      font-weight:950;
+      color: rgba(15,23,42,0.72);
+      letter-spacing:-0.01em;
+      line-height:1.1;
+      white-space:nowrap;
+    }
+    .row .v{
+      font-size:9px;
+      color:var(--muted);
+      line-height:1.25;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      hyphens:auto;
+      flex:1;
+    }
+
+    /*
+     * Protein booster pills are displayed in a single wrapping row.  Instead of stacking
+     * boosters vertically, we set up a flex container that flows horizontally and
+     * automatically wraps onto the next line if there isn’t enough space.  This keeps
+     * the sidebar compact while still showing all boosters at a glance.
+     */
+    .boosters{
+      /* Lay out booster chips in a simple two-column grid to reduce vertical
+         stacking.  Each chip occupies a cell and wraps naturally when space
+         runs out. */
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:6px;
+    }
+    /* Retain .boostRow for backwards compatibility but remove layout styling so
+       that its children (the chips) participate directly in the boosters flex
+       container. */
+    .boostRow{ display:contents; }
+    .bchip{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid rgba(15,23,42,0.08);
+      background: rgba(255,255,255,0.70);
+      color:var(--muted);
+      font-size:9px;
+      line-height:1.1;
+      white-space:nowrap;
+      margin-right:4px;
+      flex:0 0 auto;
+    }
+    .bchip .b{
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(15,23,42,0.18);
+      box-shadow: 0 0 0 3px rgba(15,23,42,0.04);
+    }
+    .bchip .b.pro{ background: rgba(20,184,166,0.90); box-shadow:0 0 0 3px rgba(20,184,166,0.14); }
+    .bchip .b.beans{ background: rgba(249,115,22,0.85); box-shadow:0 0 0 3px rgba(249,115,22,0.12); }
+    .bchip .b.ed{ background: rgba(34,197,94,0.85); box-shadow:0 0 0 3px rgba(34,197,94,0.12); }
+    .bchip .b.cheese{ background: rgba(167,139,250,0.85); box-shadow:0 0 0 3px rgba(167,139,250,0.12); }
+
+    /* Print */
+    @media print{
+      body{ padding:0; background:white; overflow:visible; }
+      .sheet{ max-width:none; height:auto; min-height:unset; }
+      .day, .sidePanel{ background:#fff; backdrop-filter:none; box-shadow:none; }
+      .meal, .row, .bchip{ background:#fff; }
+      @page{ size: A4 landscape; margin: 10mm; }
+    }
+
+    /* Responsive layout for mobile devices.  When the screen width is
+       narrow, stack all of the day cards and side panels vertically and
+       allow the page to scroll.  This makes it easy to view one day at
+       a time on a phone. */
+    @media (max-width: 768px){
+      body{ overflow:auto; }
+      .sheet{ height:auto; min-height:unset; }
+      .week{ display:flex; flex-direction:column; }
+      .week > *{ width:100%; }
+      /* Reduce horizontal padding on cards for small screens. */
+      .day, .sidePanel{ padding:6px 6px 6px; }
+      /* Allow meta pills to wrap gracefully. */
+      .meta{ justify-content:flex-start; }
+      .pill{ font-size:9px; padding:3px 6px; }
+      h1{ font-size:20px; }
+    }
+
+    /* Smaller screens: allow scroll */
+    @media (max-width: 1400px){
+      body{ overflow:auto; }
+      .sheet{ height:auto; min-height:unset; }
+      .week{ grid-template-columns: repeat(3, 1fr); }
+      /* Keep two horizontal panels in the sidebar even on narrower viewports so
+         the grocery backbone and protein boosters never stack vertically. */
+      /* The side panels are now part of the week grid so no need to override a
+         separate .side container on smaller screens. */
+      /* Maintain horizontal flow of protein pills even on smaller screens so that
+         boosters remain on the right side instead of stacking vertically. */
+      .boosters{ flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <!-- icon symbols -->
+  <svg width="0" height="0" style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true" focusable="false">
+    <symbol id="i-dumbbell" viewBox="0 0 24 24">
+      <path d="M7 7v10M17 7v10M4.5 9v6M19.5 9v6M7 12h10" fill="none" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-fish" viewBox="0 0 24 24">
+      <path d="M3 12c4-6 14-6 18 0-4 6-14 6-18 0Z" fill="none" stroke-width="2"/>
+      <path d="M21 12l2-2v4l-2-2Z" fill="none" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M9 10h0" fill="none" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24">
+      <path d="M20 21c0-4-3.6-7-8-7s-8 3-8 7" fill="none" stroke-width="2" stroke-linecap="round"/>
+      <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" fill="none" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24">
+      <path d="M6 6h15l-2 8H8L6 4H3" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm9 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="none" stroke-width="2"/>
+    </symbol>
+  </svg>
+
+  <div class="sheet">
+    <div class="topbar">
+      <h1>Foody food week</h1>
+      <div class="meta">
+        <span class="pill pro">
+          <svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>
+          ≈30–45g target
+        </span>
+        <span class="pill fish">
+          <svg class="ico fish" viewBox="0 0 24 24"><use href="#i-fish"></use></svg>
+          Wed fish-only
+        </span>
+        <span class="pill people">
+          <svg class="ico muted" viewBox="0 0 24 24"><use href="#i-user"></use></svg>
+          Y &nbsp; S
+        </span>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="week">
+        <!-- Days here - identical to previous version (shortened for brevity) -->
+        <!-- Monday (Y+S) -->
+        <section class="day">
+          <div class="dayhead">
+            <div class="dow"><span class="dot mon"></span><span class="dayname">Monday</span></div>
+            <span class="who" title="People: Y and S">
+              <svg class="userico" viewBox="0 0 24 24"><use href="#i-user"></use></svg>
+              <span class="ava y">Y</span><span class="ava s">S</span>
+            </span>
+          </div>
+          <div class="meals">
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Vegetarian Lasagna</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈32–42g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>spinach • ricotta/cottage • tomato sauce • lentils/soy mince</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> extra cottage • cannellini • parmesan</span></div>
+            </div>
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Parmigiana di Melanzane</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈28–38g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>eggplant • tomato • mozzarella/parmesan</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> lentils in sauce • white-bean side</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tuesday (S) -->
+        <section class="day">
+          <div class="dayhead">
+            <div class="dow"><span class="dot tue"></span><span class="dayname">Tuesday</span></div>
+            <span class="who" title="People: S">
+              <svg class="userico" viewBox="0 0 24 24"><use href="#i-user"></use></svg>
+              <span class="ava s">S</span>
+            </span>
+          </div>
+          <div class="meals">
+            <!-- Caprese salad remains here for S -->
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Soup + Caprese Salad</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈30–45g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>tomato/veg soup • caprese (mozzarella, tomato, basil)</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> lentil-tomato base • beans • extra mozzarella</span></div>
+            </div>
+            <!-- Pasta with Vegan Bolognese moved here for S -->
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Pasta with Vegan Bolognese</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈32–45g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>soy mince <em>or</em> lentil-mushroom ragù • tomato base</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> add beans • parmesan</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Wednesday (Y) fish -->
+        <section class="day fish">
+          <div class="dayhead">
+            <div class="dow"><span class="dot wed"></span><span class="dayname">Wednesday</span></div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="who" title="People: Y">
+                <svg class="userico" viewBox="0 0 24 24"><use href="#i-user"></use></svg>
+                <span class="ava y">Y</span>
+              </span>
+              <span class="fishpill">
+                <svg class="ico fish" viewBox="0 0 24 24"><use href="#i-fish"></use></svg>
+                fish
+              </span>
+            </div>
+          </div>
+          <div class="meals">
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Pasta with Tuna or Sardines</span></span>
+                <span class="badge"><svg class="ico fish" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈35–50g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>tomato sauce • capers • garlic • parsley • tuna <em>or</em> sardines</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> chickpeas/white beans • parmesan</span></div>
+            </div>
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Salmon (Tray-Bake)</span></span>
+                <span class="badge"><svg class="ico fish" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈35–50g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>lemon • garlic • herbs • rice/quinoa • roasted veg</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> yogurt-dill sauce • add edamame to rice</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Thursday (S) -->
+        <section class="day">
+          <div class="dayhead">
+            <div class="dow"><span class="dot thu"></span><span class="dayname">Thursday</span></div>
+            <span class="who" title="People: S">
+              <svg class="userico" viewBox="0 0 24 24"><use href="#i-user"></use></svg>
+              <span class="ava s">S</span>
+            </span>
+          </div>
+          <div class="meals">
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Black Bean Burgers</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈30–40g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>black beans • cumin • smoked paprika • yogurt-lime <em>or</em> tahini</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> feta/cheddar • quinoa side</span></div>
+            </div>
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Risotto (Mushroom/Pea)</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈25–35g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>mushrooms • peas • parmesan • creamy risotto base</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> edamame/cannellini • cottage cheese</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Friday (Y) -->
+        <section class="day">
+          <div class="dayhead">
+            <div class="dow"><span class="dot fri"></span><span class="dayname">Friday</span></div>
+            <span class="who" title="People: Y">
+              <svg class="userico" viewBox="0 0 24 24"><use href="#i-user"></use></svg>
+              <span class="ava y">Y</span>
+            </span>
+          </div>
+          <div class="meals">
+            <!-- Falafel wrap or bowl moved from Tuesday; assigned to Y -->
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="tagY" title="Assigned to Y">Y</span><span class="name">Falafel Wrap / Bowl</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈30–40g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>falafel • hummus • salad • tahini-lemon-garlic</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> tzatziki/skyr • extra chickpeas • sesame</span></div>
+            </div>
+            <!-- Spanish Tortilla moved here; assigned to Y -->
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="tagY" title="Assigned to Y">Y</span><span class="name">Spanish Tortilla</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈28–40g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>eggs • potatoes • cottage cheese • onion • salad</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> add spinach • lentil side</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Saturday (Y+S) -->
+        <section class="day">
+          <div class="dayhead">
+            <div class="dow"><span class="dot sat"></span><span class="dayname">Saturday</span></div>
+            <span class="who" title="People: Y and S">
+              <svg class="userico" viewBox="0 0 24 24"><use href="#i-user"></use></svg>
+              <span class="ava y">Y</span><span class="ava s">S</span>
+            </span>
+          </div>
+          <div class="meals">
+            <!-- Rice & Tofu Bowl remains for Y+S -->
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Rice &amp; Tofu Bowl</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈30–45g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>tofu • veg • rice • soy-ginger <em>or</em> sesame-garlic</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> edamame • double tofu • sesame</span></div>
+            </div>
+            <!-- Lentil Soup moved here; assign to Y -->
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="tagY" title="Assigned to Y">Y</span><span class="name">Lentil Soup</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈25–35g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>lentils • carrot • celery • tomato • big pot</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> extra lentils • cottage cheese (off heat)</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sunday (Y+S) -->
+        <section class="day">
+          <div class="dayhead">
+            <div class="dow"><span class="dot sun"></span><span class="dayname">Sunday</span></div>
+            <span class="who" title="People: Y and S">
+              <svg class="userico" viewBox="0 0 24 24"><use href="#i-user"></use></svg>
+              <span class="ava y">Y</span><span class="ava s">S</span>
+            </span>
+          </div>
+          <div class="meals">
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="tagY" title="Assigned to Y">Y</span><span class="name">Noodles with Tempeh/Tofu</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈32–48g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>soba/udon • tofu/tempeh • veg • peanut-lime <em>or</em> soy-sesame</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> add edamame • choose tempeh</span></div>
+            </div>
+            <div class="meal">
+              <div class="mealtitle">
+                <span class="left"><span class="name">Falafel Remix</span></span>
+                <span class="badge"><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg>≈30–40g</span>
+              </div>
+              <div class="line"><span class="mutedDot"></span><span>baked falafel • hummus • tomato/cucumber salad</span></div>
+              <div class="line"><span class="boostDot"></span><span><strong>Boost</strong> tzatziki/skyr • feta</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Grocery backbone panel (inserted directly in the week grid) -->
+        <div class="sidePanel">
+          <h2><svg class="ico muted" viewBox="0 0 24 24"><use href="#i-cart"></use></svg> Grocery backbone</h2>
+          <p class="sub">Horizontal rows (wrap within A4).</p>
+          <div class="rows">
+            <div class="row">
+              <div class="k">Proteins</div>
+              <div class="v">tofu • tempeh • lentils • chickpeas • black beans • cottage cheese • mozzarella • parmesan • tuna/sardines • salmon</div>
+            </div>
+            <div class="row">
+              <div class="k">Carbs</div>
+              <div class="v">pasta • rice (or quinoa) • potatoes</div>
+            </div>
+            <div class="row">
+              <div class="k">Veg</div>
+              <div class="v">onions • garlic • tomatoes/passata • spinach • eggplant • carrots • celery • mushrooms • herbs</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Protein boosters panel (inserted directly in the week grid) -->
+        <div class="sidePanel">
+          <h2><svg class="ico pro" viewBox="0 0 24 24"><use href="#i-dumbbell"></use></svg> Protein boosters</h2>
+          <p class="sub">Compact pills (wrap within panel).</p>
+          <div class="boosters">
+            <!-- Place all booster chips directly under the container so they flow
+                 horizontally and wrap as needed. -->
+            <span class="bchip"><span class="b pro"></span>Greek yogurt / skyr</span>
+            <span class="bchip"><span class="b beans"></span>Beans in sauces</span>
+            <span class="bchip"><span class="b ed"></span>Edamame</span>
+            <span class="bchip"><span class="b cheese"></span>Extra cheese + sesame</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
