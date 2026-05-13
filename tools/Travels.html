@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Advisor — July & September 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1714;--paper:#f7f3ee;--sand:#e8e0d4;--rust:#b84c27;--rust-light:#f0e0d8;--teal:#1d6b6b;--teal-light:#d4ecec;--gold:#c49a3c;--gold-light:#faf0d8;--muted:#6b6560;--border:#d4cdc5;--white:#ffffff;--card-shadow:0 1px 3px rgba(26,23,20,.08),0 4px 12px rgba(26,23,20,.05)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;min-height:100vh}
+
+/* ── HEADER ── */
+.site-header{background:var(--ink);color:var(--paper);padding:3rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.site-header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.015) 40px,rgba(255,255,255,.015) 41px)}
+.site-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3.2rem);font-weight:400;letter-spacing:-.01em;position:relative}
+.site-header h1 em{color:var(--gold);font-style:italic}
+.site-header p{margin-top:.75rem;font-size:.85rem;color:rgba(247,243,238,.55);font-weight:300;letter-spacing:.06em;text-transform:uppercase;position:relative}
+
+/* ── STICKY PREF BAR ── */
+.pref-section{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 1.5rem;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(26,23,20,.06);transition:transform .28s ease,opacity .28s ease,visibility .28s}
+.pref-section.bar-hidden{transform:translateY(-110%);opacity:0;visibility:hidden}
+.pref-inner{max-width:1100px;margin:0 auto}
+.pref-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.pref-title{font-size:.7rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.reset-btn{font-family:'DM Sans',sans-serif;font-size:.75rem;background:none;border:none;color:var(--muted);cursor:pointer;text-decoration:underline;padding:.2rem}
+.reset-btn:hover{color:var(--ink)}
+.pref-groups{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center}
+.pref-group{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.pref-group-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500;white-space:nowrap}
+.pref-divider{width:1px;height:24px;background:var(--border);align-self:center}
+.pref-btn{font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:400;padding:.3rem .75rem;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.pref-btn:hover{border-color:var(--ink);color:var(--ink)}
+.pref-btn:active{transform:scale(.97)}
+.pref-btn.active-rust{background:var(--rust);border-color:var(--rust);color:#fff}
+.pref-btn.active-teal{background:var(--teal);border-color:var(--teal);color:#fff}
+.pref-btn.active-gold{background:var(--gold);border-color:var(--gold);color:#fff}
+
+/* ── MAIN ── */
+.main{max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+.period-section{margin-bottom:4rem}
+.period-label{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.75rem;padding-bottom:.75rem;border-bottom:2px solid var(--ink);flex-wrap:wrap}
+.period-label h2{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:400}
+.period-label .period-meta{font-size:.8rem;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.trips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.25rem}
+
+/* ── CARD ── */
+.trip-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1.5rem;display:flex;flex-direction:column;gap:.9rem;box-shadow:var(--card-shadow);transition:opacity .25s ease,transform .25s ease,box-shadow .18s;position:relative}
+.trip-card:hover{box-shadow:0 4px 20px rgba(26,23,20,.1);transform:translateY(-1px)}
+.trip-card.is-top{border-top:3px solid var(--rust)}
+.trip-card.dimmed{opacity:.22;transform:scale(.98);pointer-events:none}
+.trip-card.highlighted{outline:2px solid var(--rust);outline-offset:1px;box-shadow:0 0 0 5px var(--rust-light),var(--card-shadow)}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem}
+.card-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;line-height:1.3;flex:1}
+.top-badge{font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;padding:.22rem .55rem;border-radius:999px;background:var(--rust);color:#fff;white-space:nowrap;flex-shrink:0}
+.card-subtitle{font-size:.8rem;color:var(--muted)}
+
+/* tags */
+.card-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.tag{font-size:.68rem;font-weight:500;padding:.2rem .55rem;border-radius:999px;letter-spacing:.03em}
+.tag-beach{background:var(--teal-light);color:var(--teal)}
+.tag-city{background:#e8e4f4;color:#4a3fa0}
+.tag-nature{background:#dff0e0;color:#226622}
+.tag-adventure{background:#fff0d8;color:#7a4500}
+.tag-nightlife{background:#fce4ec;color:#8b1a3a}
+.tag-culture{background:#e4edf8;color:#1a4a8a}
+.tag-remote{background:var(--sand);color:var(--muted)}
+
+/* meta */
+.card-meta{display:flex;flex-wrap:wrap;gap:.4rem}
+.meta-pill{display:flex;align-items:center;gap:.3rem;font-size:.76rem;color:var(--muted);background:var(--paper);border:1px solid var(--border);border-radius:4px;padding:.24rem .55rem}
+.meta-pill strong{color:var(--ink);font-weight:500}
+
+/* budget bar */
+.budget-wrap{}
+.budget-label{display:flex;justify-content:space-between;font-size:.73rem;color:var(--muted);margin-bottom:.28rem}
+.budget-bar-outer{height:5px;background:var(--sand);border-radius:999px;overflow:hidden}
+.budget-bar-inner{height:100%;border-radius:999px}
+.bar-low{background:var(--teal)}
+.bar-mid{background:var(--gold)}
+.bar-high{background:var(--rust)}
+
+/* flight row */
+.flight-row{font-size:.78rem;background:var(--paper);border-radius:5px;padding:.55rem .75rem;display:flex;flex-direction:column;gap:.18rem}
+.flight-route{font-weight:500;color:var(--ink)}
+.flight-detail{color:var(--muted);font-size:.73rem}
+
+/* season verdict pill (for Canaries) */
+.season-verdict{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:500;padding:.28rem .7rem;border-radius:999px;background:var(--gold-light);color:#7a4500;border:1px solid #e8c96a;align-self:flex-start}
+
+/* accordion */
+.itin-toggle{background:none;border:1px solid var(--border);border-radius:5px;width:100%;text-align:left;padding:.5rem .75rem;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;color:var(--muted);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.itin-toggle:hover{background:var(--paper);color:var(--ink)}
+.itin-toggle .arrow{transition:transform .18s;font-size:.62rem;flex-shrink:0}
+.itin-toggle.open .arrow{transform:rotate(180deg)}
+.itin-body{display:none;padding:.6rem 0 .2rem;font-size:.78rem}
+.itin-body.open{display:block}
+.itin-day{display:grid;grid-template-columns:72px 1fr;gap:3px 10px;padding:5px 0;border-bottom:1px solid var(--sand)}
+.itin-day:last-child{border-bottom:none}
+.itin-day-label{color:var(--muted);font-weight:500;font-size:.7rem;padding-top:2px}
+.itin-day-place{font-weight:500;color:var(--ink);margin-bottom:1px}
+.itin-day-detail{color:var(--muted);font-size:.73rem;line-height:1.5}
+
+/* notes */
+.card-note{font-size:.74rem;padding:.5rem .7rem;border-radius:4px;line-height:1.5}
+.card-note.warn{background:#fff8e1;color:#7a5500;border-left:3px solid var(--gold)}
+.card-note.info{background:var(--teal-light);color:#0e4040;border-left:3px solid var(--teal)}
+
+/* links */
+.book-links{display:flex;flex-direction:column;gap:.28rem}
+.book-link{font-size:.76rem;color:var(--teal);text-decoration:none;display:flex;align-items:center;gap:.28rem}
+.book-link:hover{color:var(--rust);text-decoration:underline}
+.book-link::before{content:'↗';font-size:.68rem}
+
+/* no match */
+.no-match{display:none;text-align:center;padding:2.5rem 1rem;color:var(--muted);font-style:italic;font-size:.9rem}
+
+/* footer */
+footer{text-align:center;padding:2rem;font-size:.73rem;color:var(--muted);border-top:1px solid var(--border);background:var(--white)}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .pref-section{padding:.85rem 1rem}
+  .pref-groups{gap:.4rem .6rem}
+  .pref-divider{display:none}
+  .pref-btn{font-size:.74rem;padding:.28rem .65rem}
+  .main{padding:1.5rem 1rem 3rem}
+  .trips-grid{grid-template-columns:1fr}
+  .period-label h2{font-size:1.4rem}
+  .trip-card{padding:1.1rem}
+  .card-title{font-size:1rem}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Your 2026 <em>Travel Guide</em></h1>
+  <p>Couple · Eindhoven · July & September · curated May 2026</p>
+</header>
+
+<div class="pref-section" id="prefs">
+  <div class="pref-inner">
+    <div class="pref-top">
+      <span class="pref-title">Filter by what matters to you</span>
+      <button class="reset-btn" onclick="resetPrefs()">Clear all</button>
+    </div>
+    <div class="pref-groups">
+      <div class="pref-group">
+        <span class="pref-group-label">Vibe</span>
+        <button class="pref-btn" data-tag="beach" data-color="teal">Beach &amp; sun</button>
+        <button class="pref-btn" data-tag="nature" data-color="teal">Nature</button>
+        <button class="pref-btn" data-tag="adventure" data-color="teal">Adventure</button>
+        <button class="pref-btn" data-tag="city" data-color="teal">City &amp; culture</button>
+        <button class="pref-btn" data-tag="nightlife" data-color="teal">Nightlife</button>
+        <button class="pref-btn" data-tag="remote" data-color="teal">Off the beaten track</button>
+      </div>
+      <div class="pref-divider"></div>
+      <div class="pref-group">
+        <span class="pref-group-label">Budget</span>
+        <button class="pref-btn" data-budget="low" data-color="rust">Spend less</button>
+        <button class="pref-btn" data-budget="mid" data-color="rust">Mid-range</button>
+        <button class="pref-btn" data-budget="high" data-color="rust">Use full budget</button>
+      </div>
+      <div class="pref-divider"></div>
+      <div class="pref-group">
+        <span class="pref-group-label">Flight</span>
+        <button class="pref-btn" data-flight="direct" data-color="gold">Direct only</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+
+<!-- ════════ JULY ════════ -->
+<section class="period-section" id="july">
+  <div class="period-label">
+    <h2>July — 7 days</h2>
+    <span class="period-meta">Max €500 per person</span>
+  </div>
+  <div class="trips-grid" id="july-grid">
+
+    <!-- J1: Albanian Riviera -->
+    <div class="trip-card is-top" data-tags="beach,nature,adventure,remote,nightlife" data-budget-tier="low" data-flight="direct" data-period="july">
+      <div class="card-head">
+        <div class="card-title">Albanian Riviera — Dhërmi</div>
+        <span class="top-badge">Top pick</span>
+      </div>
+      <p class="card-subtitle">Europe's most underrated coast — wild beaches, direct flight, genuinely off-mainstream</p>
+      <div class="card-tags">
+        <span class="tag tag-beach">Beach</span><span class="tag tag-nature">Nature</span><span class="tag tag-adventure">Adventure</span><span class="tag tag-remote">Remote</span><span class="tag tag-nightlife">Nightlife</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → TIA</strong> direct · 2h 40min</span></div>
+        <div class="meta-pill">€ <span>~<strong>€380–490/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Drymades Inn guesthouse</span></div>
+        <div class="meta-pill">🚗 <span>Rental car required</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€380–490 / €500</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-low" style="width:84%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → TIA (Tirana) — Ryanair or Wizz Air Malta</div>
+        <div class="flight-detail">Departs 09:20 or 12:50 · Return €80–120/pp · Book now for July</div>
+        <div class="flight-detail">Airport → Dhërmi: rental car ~3.5h south via SH8 coast road · ~€35–45/day</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show 7-day itinerary</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Day 1</div><div><div class="itin-day-place">Fly EIN→TIA, drive to Dhërmi</div><div class="itin-day-detail">Pick up rental car at Tirana Airport. Drive SH8 south (~3.5h). Check in to Drymades Inn. Beach dinner at a local taverna.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 2</div><div><div class="itin-day-place">Drymades Beach day</div><div class="itin-day-detail">White pebble beach, turquoise water, pine hills backdrop. Afternoon: hike to Gjipe Canyon (1.5h, no car access). Evening: beach bar DJ sets.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 3</div><div><div class="itin-day-place">Himara old town + Palasa Beach</div><div class="itin-day-detail">20 min north. Hilltop village above the coast. Swim at Livadhi Beach. Afternoon: Pirate's Cave boat trip.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 4</div><div><div class="itin-day-place">Drive south to Sarandë</div><div class="itin-day-detail">~1.5h drive. Butrint National Park (UNESCO ruins, €10/pp). Sarandë waterfront. Strongest nightlife scene on the Riviera.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 5</div><div><div class="itin-day-place">Ksamil Islands + Blue Eye spring</div><div class="itin-day-detail">Finest sand and clearest water on the coast. Swim to offshore islands. Afternoon: The Blue Eye (Syri i Kaltër) — surreal natural spring 20 min inland.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 6</div><div><div class="itin-day-place">Gjirokastër day trip or slow beach</div><div class="itin-day-detail">Option A: 2h drive to Gjirokastër — UNESCO Ottoman stone city with castle. Option B: different beach, no agenda.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 7</div><div><div class="itin-day-place">Drive north, fly home</div><div class="itin-day-detail">~3.5h drive to Tirana. Drop car at airport. Return flight to EIN (TIA departs 06:15 or 09:45).</div></div></div>
+      </div>
+      <div class="card-note warn">⚠ July is peak — book flights and guesthouse now. Car rental sells out in July. The resort version (Drymades Inn Resort) pushes €750+/pp due to room prices.</div>
+      <div class="book-links">
+        <a class="book-link" href="https://www.skyscanner.net/routes/ein/tia/eindhoven-to-tirana.html" target="_blank" rel="noopener">Flights EIN→TIA (Skyscanner)</a>
+        <a class="book-link" href="https://www.tripadvisor.com/Hotel_Review-g15359722-d27979626-Reviews-Drymades_Inn-Gjilek_Vlore_Vlore_County.html" target="_blank" rel="noopener">Drymades Inn guesthouse (TripAdvisor)</a>
+      </div>
+    </div>
+
+    <!-- J2: Ksamil -->
+    <div class="trip-card" data-tags="beach,nightlife" data-budget-tier="low" data-flight="direct" data-period="july">
+      <div class="card-head"><div class="card-title">Ksamil, Albania</div></div>
+      <p class="card-subtitle">Budget-first — same flight, sandier beaches, lower cost</p>
+      <div class="card-tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nightlife">Nightlife</span></div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → TIA</strong> direct · 2h 40min</span></div>
+        <div class="meta-pill">€ <span>~<strong>€320–400/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Hotel Bougainville or similar</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€320–400 / €500</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-low" style="width:68%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → TIA — same route as Dhërmi, drive further south (~4.5h)</div>
+        <div class="flight-detail">Return ~€80–100/pp in July</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show highlights</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Base</div><div><div class="itin-day-place">Ksamil beach clubs</div><div class="itin-day-detail">Fine white sand, turquoise water, swim to 3 offshore islands. Sunbeds and cocktails at beach clubs.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day trip</div><div><div class="itin-day-place">Butrint National Park</div><div class="itin-day-detail">15 min drive. UNESCO Roman ruins in a lagoon setting. €10/pp.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day trip</div><div><div class="itin-day-place">Blue Eye + Gjirokastër</div><div class="itin-day-detail">Combine both in one long day: Blue Eye 45 min north, Gjirokastër 1.5h.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Evening</div><div><div class="itin-day-place">Sarandë nightlife</div><div class="itin-day-detail">20 min north. Bars along the seafront promenade, clubs open late, all very cheap.</div></div></div>
+      </div>
+      <div class="card-note info">Best if keeping spend well under €500/pp is the priority. Still great beaches and day-trip options.</div>
+      <div class="book-links"><a class="book-link" href="https://www.booking.com/searchresults.html?ss=Ksamil" target="_blank" rel="noopener">Hotels in Ksamil (Booking.com)</a></div>
+    </div>
+
+    <!-- J3: Olhão / Tavira -->
+    <div class="trip-card" data-tags="beach,city,culture" data-budget-tier="low" data-flight="direct" data-period="july">
+      <div class="card-head"><div class="card-title">Olhão & Tavira, Portugal</div></div>
+      <p class="card-subtitle">Eastern Algarve fishing towns — lagoon islands, tiles, real Portugal</p>
+      <div class="card-tags"><span class="tag tag-beach">Beach</span><span class="tag tag-city">City</span><span class="tag tag-culture">Culture</span></div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → FAO</strong> direct · 3h</span></div>
+        <div class="meta-pill">€ <span>~<strong>€380–450/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Boutique guesthouse, Tavira</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€380–450 / €500</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-low" style="width:78%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → FAO (Faro) — Transavia · direct</div>
+        <div class="flight-detail">July return ~€80–130/pp · Car from Faro airport</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show highlights</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Days 1–3</div><div><div class="itin-day-place">Tavira base</div><div class="itin-day-detail">Roman bridge, tiled churches, cobblestone old town. Ferry to Ilha de Tavira sandbar beach — deserted and beautiful.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 4–5</div><div><div class="itin-day-place">Olhão fish market + lagoon</div><div class="itin-day-detail">Best fish market in the Algarve. Ferry to Ilha da Culatra for a quiet sandbar island day.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 6–7</div><div><div class="itin-day-place">Faro old town + optional Sagres</div><div class="itin-day-detail">Faro historic centre and cathedral. Optional night in Sagres (westernmost tip of Europe) before flying home.</div></div></div>
+      </div>
+      <div class="card-note warn">Avoid western Algarve (Lagos, Albufeira) — stay east of Faro for the real Portugal without the package-holiday crowds.</div>
+      <div class="book-links">
+        <a class="book-link" href="https://www.skyscanner.net/routes/ein/fao/eindhoven-to-faro.html" target="_blank" rel="noopener">Flights EIN→FAO (Skyscanner)</a>
+        <a class="book-link" href="https://www.booking.com/searchresults.html?ss=Tavira" target="_blank" rel="noopener">Stays in Tavira (Booking.com)</a>
+      </div>
+    </div>
+
+    <!-- J4: Montenegro -->
+    <div class="trip-card" data-tags="beach,city,culture,adventure" data-budget-tier="mid" data-flight="indirect" data-period="july">
+      <div class="card-head"><div class="card-title">Bay of Kotor, Montenegro</div></div>
+      <p class="card-subtitle">Fjord-like bay, walled medieval city, hidden beaches — needs a connection</p>
+      <div class="card-tags"><span class="tag tag-beach">Beach</span><span class="tag tag-city">City</span><span class="tag tag-culture">Culture</span><span class="tag tag-adventure">Adventure</span></div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → TIA</strong> + overland</span></div>
+        <div class="meta-pill">€ <span>~<strong>€400–480/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Guesthouse, Perast or Kotor</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€400–480 / €500</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-mid" style="width:88%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → TIA (direct) then drive/bus to Montenegro ~2.5h</div>
+        <div class="flight-detail">Or EIN → DBV (Dubrovnik) via AMS + bus south ~1h · No direct EIN→Montenegro</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show highlights</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Days 1–3</div><div><div class="itin-day-place">Kotor old town</div><div class="itin-day-detail">UNESCO walled city. Hike to fortress (1350 steps, panoramic bay views). Evening bars in old town squares.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 4–5</div><div><div class="itin-day-place">Perast + Our Lady of the Rocks</div><div class="itin-day-detail">Baroque village on the bay. Boat to the island church. Hire a small boat to explore hidden coves.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 6–7</div><div><div class="itin-day-place">Sveti Stefan + Budva beaches</div><div class="itin-day-detail">Sveti Stefan iconic island village. Budva: long pebble beaches and livelier nightlife.</div></div></div>
+      </div>
+      <div class="card-note warn">July: Kotor old town is busy with cruise ship day-trippers (mornings). Go early or after 4pm. Shared taxis cross the Albania–Montenegro border easily for ~€10–15.</div>
+      <div class="book-links"><a class="book-link" href="https://www.booking.com/searchresults.html?ss=Kotor" target="_blank" rel="noopener">Stays in Kotor (Booking.com)</a></div>
+    </div>
+
+  </div>
+  <div class="no-match" id="july-no-match">No trips match your current filters — try clearing a preference.</div>
+</section>
+
+<!-- ════════ SEPTEMBER ════════ -->
+<section class="period-section" id="september">
+  <div class="period-label">
+    <h2>September — 12–14 days</h2>
+    <span class="period-meta">Max €1000 per person · flexible length</span>
+  </div>
+  <div class="trips-grid" id="sept-grid">
+
+    <!-- S1: Azores -->
+    <div class="trip-card is-top" data-tags="nature,adventure,remote,beach" data-budget-tier="high" data-flight="indirect" data-period="sept">
+      <div class="card-head">
+        <div class="card-title">Azores — São Miguel + Pico</div>
+        <span class="top-badge">Top pick</span>
+      </div>
+      <p class="card-subtitle">Nothing else in Europe like it — volcanic spa, whale watching, multi-island</p>
+      <div class="card-tags"><span class="tag tag-nature">Nature</span><span class="tag tag-adventure">Adventure</span><span class="tag tag-remote">Remote</span><span class="tag tag-beach">Beach</span></div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → LIS → PDL</strong> · 1 stop</span></div>
+        <div class="meta-pill">€ <span>~<strong>€900–1000/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Octant Furnas + guesthouses</span></div>
+        <div class="meta-pill">🚗 <span>2× rental cars (separate islands)</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€900–1000 / €1000</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-high" style="width:95%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → LIS (Transavia, ~3h) → PDL (Azores Airlines, ~2.5h)</div>
+        <div class="flight-detail">Return ~€300–450/pp · Inter-island PDL→PIX: ~40min, €50–90/pp one way</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show 13-day itinerary</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Day 1</div><div><div class="itin-day-place">Arrive Ponta Delgada</div><div class="itin-day-detail">Fly EIN→LIS→PDL. Pick up car. Check in Nine DOTS boutique (~€100–140/night). Explore Ponta Delgada waterfront.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 2</div><div><div class="itin-day-place">Sete Cidades crater lakes</div><div class="itin-day-detail">45min west. Twin volcanic crater lakes — one of Portugal's 7 natural wonders. Rim hike 2–3h. Ferraria ocean thermal pools at sunset.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 3–4</div><div><div class="itin-day-place">Furnas Valley — Octant Furnas</div><div class="itin-day-detail">Boiling mud pools, fumaroles, Terra Nostra gardens. Lunch: cozido stew cooked underground. 2 nights at Octant Furnas: thermal pools, spa, À TERRA restaurant.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 5</div><div><div class="itin-day-place">Nordeste coast</div><div class="itin-day-detail">Dramatic sea cliffs, hydrangea roads, almost no tourists. Swim at Praia do Marreiros.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 6</div><div><div class="itin-day-place">Whale watching + Ribeira Quente</div><div class="itin-day-detail">Boat from Ponta Delgada (~€55/pp). September: sperm whales + dolphins. Thermal springs in the sea at Ribeira Quente.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 7</div><div><div class="itin-day-place">Lagoa do Fogo hike</div><div class="itin-day-detail">Crater lake in the island's centre (1.5h trail). Drive north: Santa Bárbara Eco-Beach bar for sundowners.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 8–9</div><div><div class="itin-day-place">Ponta Delgada + pineapple plantation</div><div class="itin-day-detail">City exploration, covered market. Visit a pineapple greenhouse plantation (unique to Azores). Return car.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 10</div><div><div class="itin-day-place">Fly to Pico Island</div><div class="itin-day-detail">Short flight PDL→PIX. New rental car. Check in Sea U Pico farmhouse (~€90–130/night). Walk UNESCO lava wine terraces at sunset.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 11</div><div><div class="itin-day-place">Mount Pico or lava pools</div><div class="itin-day-detail">Option A: Summit Portugal's highest point, 2351m (7–8h, guide required). Option B: Lava rock pools, Whale Museum.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 12</div><div><div class="itin-day-place">Faial day trip by ferry</div><div class="itin-day-detail">Ferry Madalena→Horta (20min). Horta marina murals, Capelinhos volcano (1957 eruption landscape). Return evening.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 13</div><div><div class="itin-day-place">Fly home via Lisbon</div><div class="itin-day-detail">PIX or PDL→LIS→EIN. Return car at Pico airport. Evening arrival Eindhoven.</div></div></div>
+      </div>
+      <div class="card-note warn">To stay within €1000/pp: swap Octant Furnas for Terra Nostra Garden Hotel next door (~€120/night), saving ~€150/pp. Book both car rentals and accommodation well in advance — Azorean accommodation is limited.</div>
+      <div class="book-links">
+        <a class="book-link" href="https://www.transavia.com/airports/en-eu/eindhoven-airport" target="_blank" rel="noopener">Transavia EIN → LIS</a>
+        <a class="book-link" href="https://furnas.octanthotels.com/en" target="_blank" rel="noopener">Octant Furnas (official)</a>
+        <a class="book-link" href="https://www.azoresrentalcars.com/en" target="_blank" rel="noopener">Car rental both islands</a>
+      </div>
+    </div>
+
+    <!-- S2: Lanzarote / Canary Islands -->
+    <div class="trip-card" data-tags="beach,nature,adventure,culture" data-budget-tier="mid" data-flight="direct" data-period="sept">
+      <div class="card-head"><div class="card-title">Lanzarote, Canary Islands</div></div>
+      <p class="card-subtitle">Volcanic island with lunar landscapes, boutique stays, and September's best beach weather</p>
+      <div class="card-tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nature">Nature</span><span class="tag tag-adventure">Adventure</span><span class="tag tag-culture">Culture</span></div>
+      <div class="season-verdict">★ Best in September — crowds gone, sea warmest, prices lower</div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → ACE</strong> direct · 4h 20min</span></div>
+        <div class="meta-pill">€ <span>~<strong>€580–720/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Boutique or rural finca</span></div>
+        <div class="meta-pill">🚗 <span>Rental car recommended</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€580–720 / €1000</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-mid" style="width:65%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → ACE (Lanzarote) — Transavia · direct</div>
+        <div class="flight-detail">3× per week (Mon / Wed / Sat) · September return ~€120–190/pp · 4h 20min</div>
+        <div class="flight-detail">Why September: sea at 22–23°C (warmest of the year), 26–28°C air, no school crowds, ~20% cheaper than July</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show 10-day itinerary</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Days 1–2</div><div><div class="itin-day-place">Arrecife + Puerto del Carmen base</div><div class="itin-day-detail">Arrive, pick up rental car. Check in boutique or finca. Stroll Arrecife harbour promenade. Dinner at Puerto del Carmen old harbour (local fish restaurants, not tourist strip).</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 3</div><div><div class="itin-day-place">Timanfaya National Park</div><div class="itin-day-detail">The volcanic highlight of the island — lunar lava fields, geothermal geysers. Lunch at El Diablo restaurant where food is grilled on volcanic heat. Camel ride on the lava. Unmissable.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 4</div><div><div class="itin-day-place">La Geria wine valley + Teguise</div><div class="itin-day-detail">Drive through the La Geria region: vines grown in volcanic ash hollows protected by low stone walls — unique viticultural landscape. Wine tasting at a local bodega. Afternoon: Teguise historic town (former capital).</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 5</div><div><div class="itin-day-place">César Manrique trail</div><div class="itin-day-detail">Jameos del Agua (lava cave converted to concert hall by architect Manrique — one of the most surreal spaces in Europe). Cueva de los Verdes (volcanic lava tube). Mirador del Río (clifftop viewpoint to La Graciosa island).</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 6</div><div><div class="itin-day-place">La Graciosa island day trip</div><div class="itin-day-detail">Ferry from Órzola (45min, ~€25/pp return). Tiny protected island with white sand beaches, no tarmac roads, almost no cars. Snorkel at Las Conchas beach — one of the best in the Canaries.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 7</div><div><div class="itin-day-place">Famara Beach + surf</div><div class="itin-day-detail">Wild Atlantic north coast beach, dramatic cliff backdrop. Popular with surfers. Lesson or just watch. Lunch at one of the excellent fish restaurants overlooking the beach.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Day 8</div><div><div class="itin-day-place">Playa Blanca + ferry to Fuerteventura (optional)</div><div class="itin-day-detail">Playa Blanca: Lanzarote's best beach resort, warm and sheltered. Optional: ferry to Corralejo, Fuerteventura (35min, ~€30/pp) for a day of massive sand dunes — worth it for the landscape alone.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 9–10</div><div><div class="itin-day-place">Slow down + fly home</div><div class="itin-day-detail">Final beach day or snorkelling at Puerto del Carmen. Evening departure or morning flight home on the Mon/Wed/Sat schedule.</div></div></div>
+      </div>
+      <div class="card-note info">Why not July? July is peak season with stronger winds (good for kitesurfers, annoying at the beach), higher prices, and more package-holiday tourists. September delivers the same weather with 20% lower costs and a noticeably calmer atmosphere. This trip also leaves €280–420/pp unspent — plenty of room to upgrade accommodation or add activities.</div>
+      <div class="card-note warn">Accommodation pick: avoid the big all-inclusive complexes entirely. Aim for Finca Malvasia (rural wine estate, ~€100–130/night), Lani's Suites de Luxe (adults-only boutique beachfront, ~€140–180/night), or Palacio Ico (9-room historic 1690 building in Teguise, ~€90–120/night).</div>
+      <div class="book-links">
+        <a class="book-link" href="https://www.transavia.com/airports/en-eu/eindhoven-airport/eindhoven-lanzarote" target="_blank" rel="noopener">Flights EIN→ACE (Transavia)</a>
+        <a class="book-link" href="https://www.secretplaces.com/spain/canary-islands/best-boutique-hotels-holiday-homes" target="_blank" rel="noopener">Boutique stays Lanzarote (SecretPlaces)</a>
+        <a class="book-link" href="https://canariaslovers.com/en/best-boutique-hotels-lanzarote-charm/" target="_blank" rel="noopener">Boutique hotel reviews Lanzarote</a>
+      </div>
+    </div>
+
+    <!-- S3: Sardinia -->
+    <div class="trip-card" data-tags="beach,nature,culture,city" data-budget-tier="mid" data-flight="direct" data-period="sept">
+      <div class="card-head"><div class="card-title">Sardinia fly-drive</div></div>
+      <p class="card-subtitle">September is Sardinia's best month — beaches still warm, crowds gone, prices 30% lower</p>
+      <div class="card-tags"><span class="tag tag-beach">Beach</span><span class="tag tag-nature">Nature</span><span class="tag tag-culture">Culture</span><span class="tag tag-city">City</span></div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → OLB</strong> direct · 2h 40min</span></div>
+        <div class="meta-pill">€ <span>~<strong>€650–750/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Agritourism + boutique mix</span></div>
+        <div class="meta-pill">🚗 <span>Fly-drive essential</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€650–750 / €1000</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-mid" style="width:70%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → OLB (Olbia, Sardinia) — Transavia · direct</div>
+        <div class="flight-detail">September return ~€100–160/pp · Recommend open-jaw: fly in OLB, out CAG (Cagliari)</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show itinerary arc</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Days 1–3</div><div><div class="itin-day-place">North: Olbia + Cala Brandinchi</div><div class="itin-day-detail">Arrive Olbia. Day trip to Cala Brandinchi (finest beach in northern Sardinia). Stay inland to avoid resort prices.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 4–5</div><div><div class="itin-day-place">Barbagia mountains + Gorropu Canyon</div><div class="itin-day-detail">Orgosolo murals. Gorropu Canyon hike — one of Europe's deepest gorges. Orosei coast for swimming.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 6–8</div><div><div class="itin-day-place">Bosa — the pink hilltop town</div><div class="itin-day-detail">Pastel-coloured medieval town on the Temo river. Beautiful and almost unvisited. Bosa Marina for swimming. Great local restaurants.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 9–11</div><div><div class="itin-day-place">Cagliari + south coast</div><div class="itin-day-detail">Cagliari Castello district. Pink flamingos at the salt lakes. Nora Roman ruins. Chia beach — best in the south.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 12–13</div><div><div class="itin-day-place">Fly home from CAG</div><div class="itin-day-detail">Return flight from Cagliari (check Transavia / Ryanair). Avoids backtracking to Olbia.</div></div></div>
+      </div>
+      <div class="card-note info">Leaves €250–350/pp unspent — room to upgrade accommodation or extend the trip.</div>
+      <div class="book-links"><a class="book-link" href="https://www.skyscanner.net/routes/ein/olb/eindhoven-to-olbia.html" target="_blank" rel="noopener">Flights EIN→OLB (Skyscanner)</a></div>
+    </div>
+
+    <!-- S4: Albania extended -->
+    <div class="trip-card" data-tags="nature,adventure,remote,beach,culture" data-budget-tier="low" data-flight="direct" data-period="sept">
+      <div class="card-head"><div class="card-title">Albania extended — Alps + Riviera</div></div>
+      <p class="card-subtitle">Maximum adventure + value — Tirana, Albanian Alps, Riviera. September is the best month.</p>
+      <div class="card-tags"><span class="tag tag-nature">Nature</span><span class="tag tag-adventure">Adventure</span><span class="tag tag-remote">Remote</span><span class="tag tag-beach">Beach</span><span class="tag tag-culture">Culture</span></div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → TIA</strong> direct · 2h 40min</span></div>
+        <div class="meta-pill">€ <span>~<strong>€470–530/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>City hostel + mountain guesthouse + riviera</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€470–530 / €1000</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-low" style="width:50%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → TIA — Ryanair or Wizz Air Malta</div>
+        <div class="flight-detail">September return ~€80–100/pp · much cheaper than July</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show 13-day itinerary</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Days 1–2</div><div><div class="itin-day-place">Tirana</div><div class="itin-day-detail">Bunk'Art museum (former nuclear bunker turned art museum). Skanderbeg Square. Great nightlife. Vanilla Sky boutique hostel ~€25–35/pp.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 3–4</div><div><div class="itin-day-place">Shkodër + Komani Lake</div><div class="itin-day-detail">Rozafa Castle. Komani Lake ferry (3h spectacular fjord-like journey through the mountains) to Fierza.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 5–7</div><div><div class="itin-day-place">Theth Valley — Albanian Alps</div><div class="itin-day-detail">Remote mountain village. Hike to Blue Eye of Theth, Grunas Waterfall. Accursed Mountains backdrop. Guesthouse ~€25–30/pp full board.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 8–9</div><div><div class="itin-day-place">Krujë + Berat</div><div class="itin-day-detail">Krujë castle. Berat: UNESCO "city of a thousand windows." Boutique hotel ~€40–60/night.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 10–13</div><div><div class="itin-day-place">Albanian Riviera</div><div class="itin-day-detail">September: almost no tourists, warm sea (23–24°C), very cheap. End the trip on the coast. Day trip to Gjirokastër. Fly home from TIA.</div></div></div>
+      </div>
+      <div class="card-note warn">⚠ Theth road is rough — normal car handles it but check conditions. Alternative: take the public furgon from Shkodër (€10, daily). Book Komani Lake ferry ahead in shoulder season.</div>
+      <div class="book-links"><a class="book-link" href="https://www.skyscanner.net/routes/ein/tia/eindhoven-to-tirana.html" target="_blank" rel="noopener">Flights EIN→TIA (Skyscanner)</a></div>
+    </div>
+
+    <!-- S5: Greece Peloponnese -->
+    <div class="trip-card" data-tags="culture,city,nature,adventure" data-budget-tier="mid" data-flight="direct" data-period="sept">
+      <div class="card-head"><div class="card-title">Greece — Peloponnese + Mani</div></div>
+      <p class="card-subtitle">Mainland Greece, not the islands — Nafplio, Byzantine Mystras, Mani tower villages</p>
+      <div class="card-tags"><span class="tag tag-culture">Culture</span><span class="tag tag-city">City</span><span class="tag tag-nature">Nature</span><span class="tag tag-adventure">Adventure</span></div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → ATH</strong> direct · 3h</span></div>
+        <div class="meta-pill">€ <span>~<strong>€600–700/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Tower house stays + boutique</span></div>
+        <div class="meta-pill">🚗 <span>Fly-drive from Athens</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€600–700 / €1000</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-mid" style="width:65%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → ATH (Athens) — Transavia · direct</div>
+        <div class="flight-detail">September return ~€90–150/pp · car from Athens airport to Peloponnese ~2.5h</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show itinerary arc</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Days 1–2</div><div><div class="itin-day-place">Athens</div><div class="itin-day-detail">Acropolis + museum early morning. Monastiraki flea market. Psiri neighbourhood for dinner and nightlife. Pick up car day 2.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 3–4</div><div><div class="itin-day-place">Nafplio</div><div class="itin-day-detail">Most beautiful small city in Greece. Venetian old town, harbour, Palamidi fortress. Day trips: Mycenae and Epidaurus ancient theatre.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 5–7</div><div><div class="itin-day-place">Mani Peninsula</div><div class="itin-day-detail">Medieval tower villages, dramatic limestone landscape. Stay in converted tower house. Diros caves (underground lake by boat).</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 8–10</div><div><div class="itin-day-place">Mystras + Sparta</div><div class="itin-day-detail">Mystras: abandoned Byzantine city on the mountain — extraordinary and barely visited. Better than Pompeii for atmosphere.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 11–13</div><div><div class="itin-day-place">Olympia + north coast to ATH</div><div class="itin-day-detail">Ancient Olympia. Drive north Peloponnese coast. Corinth canal. Return to Athens. Fly home.</div></div></div>
+      </div>
+      <div class="card-note info">The Mani is almost entirely unvisited by tourists despite being extraordinary. September: sea still 26°C, temperatures pleasant, no crowds.</div>
+      <div class="book-links">
+        <a class="book-link" href="https://www.skyscanner.net/routes/ein/ath/eindhoven-to-athens.html" target="_blank" rel="noopener">Flights EIN→ATH (Skyscanner)</a>
+        <a class="book-link" href="https://www.booking.com/searchresults.html?ss=Nafplio" target="_blank" rel="noopener">Stays in Nafplio (Booking.com)</a>
+      </div>
+    </div>
+
+    <!-- S6: Madeira -->
+    <div class="trip-card" data-tags="nature,adventure,remote" data-budget-tier="mid" data-flight="direct" data-period="sept">
+      <div class="card-head"><div class="card-title">Madeira</div></div>
+      <p class="card-subtitle">Year-round volcanic island — levada hikes, lush landscape, reliable sunshine</p>
+      <div class="card-tags"><span class="tag tag-nature">Nature</span><span class="tag tag-adventure">Adventure</span><span class="tag tag-remote">Remote</span></div>
+      <div class="card-meta">
+        <div class="meta-pill">✈ <span><strong>EIN → FNC</strong> direct · 3h 30min</span></div>
+        <div class="meta-pill">€ <span>~<strong>€680–780/pp</strong></span></div>
+        <div class="meta-pill">🏨 <span>Quinta manor house in the hills</span></div>
+        <div class="meta-pill">🚗 <span>Car recommended</span></div>
+      </div>
+      <div class="budget-wrap">
+        <div class="budget-label"><span>Budget use</span><span>€680–780 / €1000</span></div>
+        <div class="budget-bar-outer"><div class="budget-bar-inner bar-mid" style="width:73%"></div></div>
+      </div>
+      <div class="flight-row">
+        <div class="flight-route">EIN → FNC (Funchal, Madeira) — Transavia · direct</div>
+        <div class="flight-detail">September return ~€100–160/pp</div>
+      </div>
+      <button class="itin-toggle" onclick="toggleItin(this)"><span>Show highlights</span><span class="arrow">▼</span></button>
+      <div class="itin-body">
+        <div class="itin-day"><div class="itin-day-label">Days 1–3</div><div><div class="itin-day-place">Funchal</div><div class="itin-day-detail">Old town market, cable car to Monte, Blandy's wine lodge Madeira tasting. One of the best small city arrivals in the Atlantic.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 4–6</div><div><div class="itin-day-place">Levada walks</div><div class="itin-day-detail">Levadas: ancient irrigation canals with flat cliff-edge walking paths, unique to Madeira. Best: Levada das 25 Fontes and PR1 to Pico do Areeiro.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 7–8</div><div><div class="itin-day-place">North coast</div><div class="itin-day-detail">Porto Moniz natural lava rock swimming pools. São Vicente caves. Greener and moodier than the south coast.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 9–10</div><div><div class="itin-day-place">Pico do Arieiro sunrise</div><div class="itin-day-detail">Drive up at 4am for sunrise above the clouds at 1818m. Santana A-frame village houses. Machico bay for swimming.</div></div></div>
+        <div class="itin-day"><div class="itin-day-label">Days 11–13</div><div><div class="itin-day-place">Ponta do Sol + fly home</div><div class="itin-day-detail">Sunniest village in Madeira. Remote Valley trail. Final dinners in Funchal old town.</div></div></div>
+      </div>
+      <div class="card-note info">vs. Azores: Madeira is lusher, warmer, more reliable sunshine. Azores is more dramatic and unusual. For guaranteed sun + hiking, Madeira is the safer choice.</div>
+      <div class="book-links"><a class="book-link" href="https://www.skyscanner.net/routes/ein/fnc/eindhoven-to-funchal.html" target="_blank" rel="noopener">Flights EIN→FNC (Skyscanner)</a></div>
+    </div>
+
+  </div>
+  <div class="no-match" id="sept-no-match">No trips match your current filters — try clearing a preference.</div>
+</section>
+
+</main>
+
+<footer>
+  <p>Travel recommendations compiled May 2026 · Departing from Eindhoven (EIN) · Couple, 2 persons · Prices indicative — verify before booking</p>
+</footer>
+
+<script>
+/* ── state ── */
+const state = { tags: new Set(), budget: null, directOnly: false };
+
+/* ── itinerary accordion ── */
+function toggleItin(btn) {
+  btn.classList.toggle('open');
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+  btn.querySelector('span:first-child').textContent =
+    body.classList.contains('open') ? 'Hide itinerary' : 'Show itinerary';
+}
+
+/* ── filter engine ──
+   Tags: OR within group (any selected tag matches)
+   Budget: ceiling (low = low only, mid = low+mid, high = all)
+   Direct: hard gate
+   All active groups AND'd together
+*/
+function cardPasses(card) {
+  if (state.tags.size > 0) {
+    const cardTags = card.dataset.tags.split(',');
+    if (!cardTags.some(t => state.tags.has(t))) return false;
+  }
+  if (state.budget) {
+    const allowed = { low:['low'], mid:['low','mid'], high:['low','mid','high'] }[state.budget];
+    if (!allowed.includes(card.dataset.budgetTier)) return false;
+  }
+  if (state.directOnly && card.dataset.flight !== 'direct') return false;
+  return true;
+}
+
+function applyFilters() {
+  const cards = document.querySelectorAll('.trip-card');
+  const hasFilters = state.tags.size > 0 || state.budget !== null || state.directOnly;
+  let julyVis = 0, septVis = 0;
+
+  cards.forEach(card => {
+    if (!hasFilters) {
+      card.classList.remove('dimmed','highlighted');
+      return;
+    }
+    const passes = cardPasses(card);
+    card.classList.toggle('dimmed', !passes);
+    card.classList.toggle('highlighted', passes);
+    if (passes) {
+      if (card.dataset.period === 'july') julyVis++;
+      if (card.dataset.period === 'sept') septVis++;
+    }
+  });
+
+  document.getElementById('july-no-match').style.display = (hasFilters && julyVis === 0) ? 'block' : 'none';
+  document.getElementById('sept-no-match').style.display = (hasFilters && septVis === 0) ? 'block' : 'none';
+}
+
+/* ── button handlers ── */
+document.querySelectorAll('.pref-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const tag = this.dataset.tag;
+    const budget = this.dataset.budget;
+    const flight = this.dataset.flight;
+    const cls = 'active-' + this.dataset.color;
+
+    if (tag) {
+      if (state.tags.has(tag)) { state.tags.delete(tag); this.classList.remove(cls); }
+      else { state.tags.add(tag); this.classList.add(cls); }
+    }
+    if (budget) {
+      if (state.budget === budget) { state.budget = null; this.classList.remove(cls); }
+      else {
+        document.querySelectorAll('[data-budget]').forEach(b => b.classList.remove('active-rust'));
+        state.budget = budget; this.classList.add(cls);
+      }
+    }
+    if (flight === 'direct') {
+      state.directOnly = !state.directOnly;
+      this.classList.toggle(cls, state.directOnly);
+    }
+    applyFilters();
+  });
+});
+
+function resetPrefs() {
+  state.tags.clear(); state.budget = null; state.directOnly = false;
+  document.querySelectorAll('.pref-btn').forEach(b =>
+    b.classList.remove('active-rust','active-teal','active-gold'));
+  applyFilters();
+}
+
+/* ── scroll-hide pref bar ──
+   Works on both desktop and mobile.
+   Uses IntersectionObserver on the header to know when we've scrolled past it,
+   then hides bar on scroll-down and restores on scroll-up.
+   Falls back to scroll-event if IntersectionObserver unavailable.
+*/
+(function() {
+  const bar = document.getElementById('prefs');
+  const header = document.querySelector('.site-header');
+  let headerGone = false;
+  let lastY = 0;
+  let ticking = false;
+
+  function onScroll() {
+    const y = window.scrollY || window.pageYOffset;
+    if (headerGone) {
+      if (y > lastY + 3) { bar.classList.add('bar-hidden'); }
+      else if (y < lastY - 3) { bar.classList.remove('bar-hidden'); }
+    } else {
+      bar.classList.remove('bar-hidden');
+    }
+    lastY = y;
+    ticking = false;
+  }
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      headerGone = !entries[0].isIntersecting;
+      if (!headerGone) bar.classList.remove('bar-hidden');
+    }, { threshold: 0 }).observe(header);
+  } else {
+    // fallback: consider header gone after 100px
+    document.addEventListener('scroll', function() {
+      headerGone = (window.scrollY || window.pageYOffset) > 100;
+    }, { passive: true });
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
+
+  // also handle touch events directly for snappier mobile response
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchmove', function(e) {
+    if (!headerGone) return;
+    const dy = touchStartY - e.touches[0].clientY;
+    if (dy > 8) bar.classList.add('bar-hidden');
+    else if (dy < -8) bar.classList.remove('bar-hidden');
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
