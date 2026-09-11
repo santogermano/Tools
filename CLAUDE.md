@@ -9,7 +9,7 @@ from the code alone.
 | Host | Serves from | Source |
 |---|---|---|
 | `yasine.org` | `public_html/` | **This repo**, root. |
-| `tools.yasine.org` | `public_html/tools/` (same physical folder as `yasine.org/tools/`) | Partly this repo, partly server-only files — see below. |
+| `tools.yasine.org` | `public_html/tools/` (same physical folder as `yasine.org/tools/`) | This repo's `tools/` files. |
 | `events.yasine.org` | `public_html/events/` | A separate app, not in GitHub. Only linked from the homepage. |
 | `testing.yasine.org` | `public_html/testing/` | Unrelated scratch space. Ignore. |
 
@@ -25,7 +25,6 @@ nothing else to run. Confirm in hPanel: **Websites → yasine.org → Git**.
 `.github/workflows/pages.yml` also deploys to GitHub Pages on push to
 `main`. That's a harmless secondary preview at
 `santogermano.github.io/Tools` — it is **not** what serves the live site.
-Don't confuse the two, and don't remove it without reason.
 
 Do not try to upload files to Hostinger directly from a Claude Code session
 via the Hostinger MCP connector's `generateUploadURLV1`/TUS flow — it hands
@@ -33,60 +32,42 @@ back a signed URL on `*.hstgr.io` that this sandboxed environment's network
 policy blocks (403 at the egress proxy). That's an org-level policy, not a
 bug; don't spend time retrying it. hPanel Git deploy is the working path.
 
+## Homepage
+
+`index.html` is a small hand-styled page (dark/light theme toggle, an
+avatar with tools arranged in a circle around it). Tools come from one
+`TOOLS` array near the bottom of the `<script>` block:
+`{ name, desc, url }`. The circle layout auto-spaces however many entries
+are in the array — no positions to hand-tune.
+
 ## Adding or updating a tool
 
 1. Drop the tool's HTML file in `tools/`, kebab-case filename (no spaces —
    they break URLs).
-2. Add one entry to the `TOOLS` array near the bottom of `index.html`:
-   `{ name, desc, url: 'tools/your-file.html' }`. That's the entire build
-   step — no bundler, no manifest to regenerate.
+2. Add one entry to `TOOLS` in `index.html`.
 3. Commit, push to `main` (or merge a PR into it). Done.
 
-For a tool hosted elsewhere and not mirrored in this repo (like Events, or
-Travel Advisor below), give it an absolute `url` — the renderer detects
-`http(s)://` and adds `target="_blank" rel="noopener"` automatically.
+For a tool hosted elsewhere and not mirrored in this repo (like Events),
+give it an absolute `url` — the renderer detects `http(s)://` and adds
+`target="_blank" rel="noopener"` automatically.
 
-## Travel Advisor — do not "fix" this by re-deploying from the repo
+**When retiring a tool:** remove both its file under `tools/` *and* its
+entry in `TOOLS` in the same change. A file deleted from the repo but left
+in the array becomes a dead link once deployed — that happened once
+already (Travel Advisor and the ETF guide were removed from the repo
+without updating the array; fixed in the commit right before this note).
 
-`tools/travel-advisor.html` in this repo is a **stale, feature-incomplete
-duplicate**. The real, current version lives only on the server at
-`public_html/tools/tools/Travels.html` (reachable as
-`https://tools.yasine.org/tools/Travels.html`), where someone hand-extended
-it with a trip-idea save feature backed by `Travels-store.php` /
-`Travels-store.json` (server-side, PHP, not in git). The homepage links
-directly to that live URL instead of shipping the repo's outdated copy.
+## Open question — server-side data cleanup
 
-If you ever want to bring Travel Advisor back under version control:
-pull the *live* file's content into the repo (not the other way around),
-and think carefully about `Travels-store.json` before doing anything with
-it — see next section.
-
-`tools/travel-advisor.html` itself is currently unreferenced dead weight in
-the repo. It should be deleted (`git rm tools/travel-advisor.html`) — a
-prior session's safety guard blocked the automated deletion, so it's still
-sitting there pending a manual `git rm`.
-
-## Files that live on the server only — never add these to git
-
-Inside `public_html/tools/tools/` (yes, double-nested — an artifact of an
-old manual upload): `Travels-store.php`, `Travels-store.json`,
-`Travels-store.lock`, `Travels-map.html`, `manifest.json`, plus the original
-space-named tool files (`Foody food week.html`, `Newsletter Generator.html`,
-`Travels.html`).
-
-`Travels-store.json` in particular holds live, user-generated data (saved
-trip ideas), written at runtime by `Travels-store.php`. **Never commit this
-file.** If it ever ends up tracked in git, a future deploy could overwrite
-real saved data with a stale committed copy, or (if hPanel does a hard
-reset rather than a soft pull) silently destroy it. Git deploys are
-additive/non-destructive by default *only* as long as these files stay
-untracked — leave them alone.
-
-`public_html/tools/index.html` also still exists as a leftover — the old
-GitHub-API-driven homepage design, now stale relative to this repo's
-`index.html`. It's what currently makes `tools.yasine.org` show a different
-(older) homepage than `yasine.org`. Worth cleaning up or redirecting later;
-not touched by this repo's deploy since this repo has no `tools/index.html`.
+As of the last check, the old nested `public_html/tools/tools/` directory
+(a leftover from an early manual upload, holding `Travels-store.php` /
+`Travels-store.json` and some original space-named tool files) appears to
+be gone from the live server. If that removal was intentional, nothing to
+do. If not: `Travels-store.json` held real user data (saved trip research)
+that was never in git, so it isn't recoverable from this repo — check
+Hostinger backups/snapshots if it's needed back. Either way, verify this
+with the site owner rather than assuming; don't try to reconstruct or
+second-guess it here.
 
 ## Security posture
 
@@ -106,10 +87,7 @@ writing them down here.
 - `index.html` carries `<meta name="robots" content="noindex, nofollow">`
   since these are personal tools, not a marketing site. Remove deliberately
   if you want the homepage indexed.
-- The server-only files listed above (Travel Advisor's save backend
-  especially) were flagged for an access-control review with the site
-  owner directly — check with them on status before assuming it's handled.
-- Before shipping a new personal tool, check it for the same class of
-  thing the Travel Advisor page has (a title/header disclosing specifics
-  like exact travel dates) — fine for a private tool, worth genericizing
-  on anything meant to be publicly linked.
+- Before shipping a new personal tool, check it for content that
+  discloses specifics you wouldn't want public (exact dates, locations,
+  financial figures) — fine for a private tool, worth genericizing on
+  anything meant to be publicly linked.
