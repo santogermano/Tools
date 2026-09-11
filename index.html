@@ -155,7 +155,7 @@
       {
         name: 'Travel Advisor',
         desc: 'A curated trip planner with filterable stays, activities and routes.',
-        url: 'tools/travel-advisor.html'
+        url: 'https://tools.yasine.org/tools/Travels.html'
       },
       {
         name: 'Foody — Food Week',
@@ -170,9 +170,12 @@
     ];
 
     const list = document.getElementById('tools-list');
-    list.innerHTML = TOOLS.map((t, i) => `
+    list.innerHTML = TOOLS.map((t, i) => {
+      const external = /^https?:\/\//.test(t.url);
+      const attrs = external ? ' target="_blank" rel="noopener"' : '';
+      return `
       <li>
-        <a class="tool" href="${t.url}">
+        <a class="tool" href="${t.url}"${attrs}>
           <span class="tool-index">${String(i + 1).padStart(2, '0')}</span>
           <span class="tool-body">
             <span class="tool-name">${t.name}<span class="arrow">→</span></span>
@@ -180,7 +183,8 @@
           </span>
         </a>
       </li>
-    `).join('');
+    `;
+    }).join('');
 
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
